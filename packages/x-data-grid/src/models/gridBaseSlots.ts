@@ -166,6 +166,7 @@ export type MenuItemProps = CommonProps & {
   selected?: boolean;
   value?: number | string | readonly string[];
   style?: React.CSSProperties;
+  ref?: Ref<HTMLLIElement>;
 };
 
 type BasePlacement = 'top' | 'bottom' | 'left' | 'right';
