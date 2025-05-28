@@ -7,6 +7,7 @@ import { GridSignature } from '../../constants/signature';
 import { DataGridProcessedProps } from '../../models/props/DataGridProps';
 import type { GridCoreApi, MuiEvent } from '../../models';
 import type { GridApiCommon, GridPrivateApiCommon } from '../../models/api/gridApiCommon';
+import type { GridApiCaches } from '../../models/gridApiCaches';
 
 const SYMBOL_API_PRIVATE = Symbol('mui.api_private');
 
@@ -31,12 +32,12 @@ function createPrivateAPI<PrivateApi extends GridPrivateApiCommon, Api extends G
     return existingPrivateApi;
   }
 
-  const state = {} as Api['state'];
+  const state: Api['state'] = {};
   const privateApi = {
     state,
     store: Store.create(state),
     instanceId: { id: globalId },
-  } as any as PrivateApi;
+  } as PrivateApi;
 
   globalId += 1;
 
@@ -67,7 +68,7 @@ function createPrivateAPI<PrivateApi extends GridPrivateApiCommon, Api extends G
   };
 
   privateApi.register('private', {
-    caches: {} as any,
+    caches: {} as GridApiCaches,
     eventManager: new EventManager(),
   });
 
@@ -88,7 +89,7 @@ function createPublicAPI<PrivateApi extends GridPrivateApiCommon, Api extends Gr
       return privateApiRef.current.instanceId;
     },
     [SYMBOL_API_PRIVATE]: privateApiRef.current,
-  } as any as Api;
+  } as unknown as Api;
 
   return publicApi;
 }
