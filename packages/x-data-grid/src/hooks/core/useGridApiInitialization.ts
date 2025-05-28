@@ -5,7 +5,7 @@ import { Store } from '../../utils/Store';
 import { useGridApiMethod } from '../utils/useGridApiMethod';
 import { GridSignature } from '../../constants/signature';
 import { DataGridProcessedProps } from '../../models/props/DataGridProps';
-import type { GridCoreApi } from '../../models';
+import type { GridCoreApi, MuiEvent } from '../../models';
 import type { GridApiCommon, GridPrivateApiCommon } from '../../models/api/gridApiCommon';
 
 const SYMBOL_API_PRIVATE = Symbol('mui.api_private');
@@ -112,9 +112,9 @@ export function useGridApiInitialization<
   }
 
   const publishEvent = React.useCallback<GridCoreApi['publishEvent']>(
-    (...args: any[]) => {
+    (...args) => {
       const [name, params, event = {}] = args;
-      event.defaultMuiPrevented = false;
+      (event as MuiEvent).defaultMuiPrevented = false;
 
       if (isSyntheticEvent(event) && event.isPropagationStopped()) {
         return;
