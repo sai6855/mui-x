@@ -2,9 +2,9 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { forwardRef } from '@mui/x-internals/forwardRef';
 import { useGridSelector } from '../hooks/utils/useGridSelector';
-import { gridTopLevelRowCountSelector } from '../hooks/features/rows/gridRowsSelector';
-import { gridRowSelectionCountSelector } from '../hooks/features/rowSelection/gridRowSelectionSelector';
-import { gridFilteredTopLevelRowCountSelector } from '../hooks/features/filter/gridFilterSelector';
+import { gridTopLevelRowCountSelector, gridRowTreeSelector } from '../hooks/features/rows/gridRowsSelector';
+import { gridRowSelectionCountSelector, gridRowSelectionStateSelector } from '../hooks/features/rowSelection/gridRowSelectionSelector';
+import { gridFilteredTopLevelRowCountSelector, gridFilteredSortedRowEntriesSelector } from '../hooks/features/filter/gridFilterSelector';
 import { useGridApiContext } from '../hooks/utils/useGridApiContext';
 import { GridSelectedRowCount } from './GridSelectedRowCount';
 import { GridFooterContainer, GridFooterContainerProps } from './containers/GridFooterContainer';
@@ -15,8 +15,31 @@ const GridFooter = forwardRef<HTMLDivElement, GridFooterContainerProps>(
     const apiRef = useGridApiContext();
     const rootProps = useGridRootProps();
     const totalTopLevelRowCount = useGridSelector(apiRef, gridTopLevelRowCountSelector);
-    const selectedRowCount = useGridSelector(apiRef, gridRowSelectionCountSelector);
+    const baseSelectedRowCount = useGridSelector(apiRef, gridRowSelectionCountSelector);
     const visibleTopLevelRowCount = useGridSelector(apiRef, gridFilteredTopLevelRowCountSelector);
+    
+    // Get additional selectors for footer row fix
+    const selection = useGridSelector(apiRef, gridRowSelectionStateSelector);
+    const filteredSortedRowEntries = useGridSelector(apiRef, gridFilteredSortedRowEntriesSelector);
+    const rowTree = useGridSelector(apiRef, gridRowTreeSelector);
+
+    // Calculate corrected selection count that excludes footer rows
+    // This fixes the selection count display issue when aggregation is enabled
+    const selectedRowCount = React.useMemo(() => {
+      if (selection.type === 'include') {
+        return selection.ids.size;
+      }
+
+      // In exclude selection, count only selectable rows (excluding footer and pinned rows)
+      const selectableFilteredRowCount = filteredSortedRowEntries.filter((row: any) => {
+        const rowNode = rowTree[row.id];
+        return rowNode?.type !== 'footer' && rowNode?.type !== 'pinnedRow';
+      }).length;
+
+      const correctedCount = selectableFilteredRowCount - selection.ids.size;
+      // Return the corrected count if it's positive, otherwise fall back to base count
+      return correctedCount > 0 ? correctedCount : baseSelectedRowCount;
+    }, [selection, filteredSortedRowEntries, rowTree, baseSelectedRowCount]);
 
     const selectedRowCountElement =
       !rootProps.hideFooterSelectedRowCount && selectedRowCount > 0 ? (

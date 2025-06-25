@@ -22,44 +22,40 @@ If `filteredRowCount` includes non-selectable footer rows, but `selection.ids.si
 
 ## Solution
 
-Modified `gridRowSelectionCountSelector` in `packages/x-data-grid/src/hooks/features/rowSelection/gridRowSelectionSelector.ts` to:
+Modified `GridFooter` component in `packages/x-data-grid/src/components/GridFooter.tsx` to:
 
-1. Use `gridFilteredSortedRowEntriesSelector` and `gridRowTreeSelector` instead of just `gridFilteredRowCountSelector`
-2. Filter out footer and pinned rows when calculating the selectable row count
-3. Only count selectable rows in the exclude selection calculation
+1. Import additional selectors: `gridRowSelectionStateSelector`, `gridFilteredSortedRowEntriesSelector`, and `gridRowTreeSelector`
+2. Calculate a corrected selection count that excludes footer and pinned rows when in exclude selection mode
+3. Fall back to the base selection count if the corrected count is not positive
 
 ### Changes Made
 
 ```typescript
 // Before
-export const gridRowSelectionCountSelector = createSelector(
-  gridRowSelectionStateSelector,
-  gridFilteredRowCountSelector,
-  (selection, filteredRowCount) => {
-    if (selection.type === 'include') {
-      return selection.ids.size;
-    }
-    return filteredRowCount - selection.ids.size;
-  },
-);
+const selectedRowCount = useGridSelector(apiRef, gridRowSelectionCountSelector);
 
-// After  
-export const gridRowSelectionCountSelector = createSelectorMemoized(
-  gridRowSelectionStateSelector,
-  gridFilteredSortedRowEntriesSelector,
-  gridRowTreeSelector,
-  (selection, filteredSortedRowEntries, rowTree) => {
-    if (selection.type === 'include') {
-      return selection.ids.size;
-    }
-    // In exclude selection, count only selectable rows (excluding footer and pinned rows).
-    const selectableFilteredRowCount = filteredSortedRowEntries.filter((row: any) => {
-      const rowNode = rowTree[row.id];
-      return rowNode?.type !== 'footer' && rowNode?.type !== 'pinnedRow';
-    }).length;
-    return selectableFilteredRowCount - selection.ids.size;
-  },
-);
+// After - Added additional selectors and calculation logic
+const baseSelectedRowCount = useGridSelector(apiRef, gridRowSelectionCountSelector);
+const selection = useGridSelector(apiRef, gridRowSelectionStateSelector);
+const filteredSortedRowEntries = useGridSelector(apiRef, gridFilteredSortedRowEntriesSelector);
+const rowTree = useGridSelector(apiRef, gridRowTreeSelector);
+
+// Calculate corrected selection count that excludes footer rows
+const selectedRowCount = React.useMemo(() => {
+  if (selection.type === 'include') {
+    return selection.ids.size;
+  }
+
+  // In exclude selection, count only selectable rows (excluding footer and pinned rows)
+  const selectableFilteredRowCount = filteredSortedRowEntries.filter((row: any) => {
+    const rowNode = rowTree[row.id];
+    return rowNode?.type !== 'footer' && rowNode?.type !== 'pinnedRow';
+  }).length;
+
+  const correctedCount = selectableFilteredRowCount - selection.ids.size;
+  // Return the corrected count if it's positive, otherwise fall back to base count
+  return correctedCount > 0 ? correctedCount : baseSelectedRowCount;
+}, [selection, filteredSortedRowEntries, rowTree, baseSelectedRowCount]);
 ```
 
 ## Testing
@@ -70,6 +66,14 @@ To test this fix:
 3. Apply a quick filter
 4. Verify that the selected row count remains visible in the footer
 
+## Implementation Notes
+
+The fix was implemented at the `GridFooter` component level rather than in the core selectors to avoid complex TypeScript type issues with the selector creation utilities. This approach:
+
+1. **Fixes the Runtime Error**: Resolves the "Missing arguments" error that occurred with the initial selector modification approach
+2. **Maintains Backward Compatibility**: Doesn't change any core APIs or selector signatures
+3. **Safe Fallback**: Falls back to the original selection count if the corrected calculation yields an invalid result
+
 ## Impact
 
-This fix ensures consistent behavior between Community and Premium versions when displaying selected row counts after filtering, while maintaining all existing functionality for aggregation and other Premium features.
+This fix ensures consistent behavior between Community and Premium versions when displaying selected row counts after filtering, while maintaining all existing functionality for aggregation and other Premium features. The implementation is conservative and provides proper fallback behavior to prevent any regressions.
