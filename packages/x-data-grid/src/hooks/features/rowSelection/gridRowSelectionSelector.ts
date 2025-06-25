@@ -3,10 +3,10 @@ import {
   createRootSelector,
   createSelectorMemoized,
 } from '../../../utils/createSelector';
-import { gridDataRowIdsSelector, gridRowsLookupSelector } from '../rows/gridRowsSelector';
+import { gridDataRowIdsSelector, gridRowsLookupSelector, gridRowTreeSelector } from '../rows/gridRowsSelector';
 import { GridStateCommunity } from '../../../models/gridStateCommunity';
 import { GridRowId, GridRowModel } from '../../../models/gridRows';
-import { gridFilteredRowCountSelector } from '../filter/gridFilterSelector';
+import { gridFilteredRowCountSelector, gridFilteredSortedRowEntriesSelector } from '../filter/gridFilterSelector';
 import { createRowSelectionManager } from '../../../models/gridRowSelectionManager';
 
 export const gridRowSelectionStateSelector = createRootSelector(
@@ -18,15 +18,20 @@ export const gridRowSelectionManagerSelector = createSelectorMemoized(
   createRowSelectionManager,
 );
 
-export const gridRowSelectionCountSelector = createSelector(
+export const gridRowSelectionCountSelector = createSelectorMemoized(
   gridRowSelectionStateSelector,
-  gridFilteredRowCountSelector,
-  (selection, filteredRowCount) => {
+  gridFilteredSortedRowEntriesSelector,
+  gridRowTreeSelector,
+  (selection, filteredSortedRowEntries, rowTree) => {
     if (selection.type === 'include') {
       return selection.ids.size;
     }
-    // In exclude selection, all rows are selectable.
-    return filteredRowCount - selection.ids.size;
+    // In exclude selection, count only selectable rows (excluding footer and pinned rows).
+    const selectableFilteredRowCount = filteredSortedRowEntries.filter((row: any) => {
+      const rowNode = rowTree[row.id];
+      return rowNode?.type !== 'footer' && rowNode?.type !== 'pinnedRow';
+    }).length;
+    return selectableFilteredRowCount - selection.ids.size;
   },
 );
 
