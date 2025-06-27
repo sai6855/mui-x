@@ -5,8 +5,8 @@
 [![npm version](https://img.shields.io/npm/v/@mui/x-codemod.svg?style=flat-square)](https://www.npmjs.com/package/@mui/x-codemod)
 [![npm downloads](https://img.shields.io/npm/dm/@mui/x-codemod.svg?style=flat-square)](https://www.npmjs.com/package/@mui/x-codemod)
 
-This repository contains a collection of codemod scripts based for use with
-[jscodeshift](https://github.com/facebook/jscodeshift) that help update MUI X APIs.
+This repository contains a collection of codemod scripts for use with
+[jscodeshift](https://github.com/facebook/jscodeshift) that help update MUI X APIs.
 
 ## Setup & run
 
@@ -153,8 +153,8 @@ Renames legend props to the corresponding slotProps.
 
 ```diff
  <LineChart
--  legend={{ hiden: true}}
-+  slotProps={{ legend: { hiden: true} }}
+-  legend={{ hidden: true}}
++  slotProps={{ legend: { hidden: true} }}
  />
 ```
 
@@ -513,7 +513,7 @@ The list includes these transformers
 > This codemod is not idempotent. Running it multiple times will rename the imports back and forth.
 > Usage of `AdapterDateFnsV3` would be replaced by `AdapterDateFns` and a subsequent run would rename it to `AdapterDateFnsV2`.
 
-- Renames `AdapterDateFns` and `AdapterDateFnsJalali` imports to `AdapterDateFnsV2` and `AdapterDateFnsJalaliV2` respectfully.
+- Renames `AdapterDateFns` and `AdapterDateFnsJalali` imports to `AdapterDateFnsV2` and `AdapterDateFnsJalaliV2` respectively.
 
   ```diff
   -import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -522,7 +522,7 @@ The list includes these transformers
   +import { AdapterDateFnsJalali } from '@mui/x-date-pickers/AdapterDateFnsJalaliV2';
   ```
 
-- Renames `AdapterDateFnsV3` and `AdapterDateFnsJalaliV3` imports to `AdapterDateFns` and `AdapterDateFnsJalali` respectfully.
+- Renames `AdapterDateFnsV3` and `AdapterDateFnsJalaliV3` imports to `AdapterDateFns` and `AdapterDateFnsJalali` respectively.
 
   ```diff
   -import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';

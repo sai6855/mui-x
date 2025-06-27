@@ -91,7 +91,7 @@ const CustomTreeItemContent = styled(TreeItemContent)(({ theme }) => ({
   // ...other styles
   paddingLeft:
       `calc(${theme.spacing(1)} + var(--TreeView-itemChildrenIndentation) * var(--TreeView-itemDepth))`,
-}
+}));
 ```
 
 :::

@@ -17,8 +17,8 @@ export type ChartContextValue<
   TOptionalSignatures extends readonly ChartAnyPluginSignature[] = [],
 > = {
   /**
-   * And object with all the methods needed to interact with the chart.
-   */
+ * An object with all the methods needed to interact with the chart.
+ */
   instance: ChartInstance<TSignatures, TOptionalSignatures>;
   /**
    * A subset of the `instance` method that are exposed to the developers.
