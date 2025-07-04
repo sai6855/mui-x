@@ -44,10 +44,21 @@ apiRef.current.exportDataAsPrint(options);
 ```
 
 **Steps**:
-- Validate grid root element exists
-- Save current grid state for restoration
-- Log debug information
-- Check for required dependencies
+- **Validate grid root element exists**:
+  ```typescript
+  if (!apiRef.current.rootElementRef!.current) {
+    throw new Error('MUI X: No grid root element available.');
+  }
+  ```
+- **Save current grid state for restoration**:
+  ```typescript
+  previousGridState.current = apiRef.current.exportState();
+  ```
+- **Log debug information**:
+  ```typescript
+  logger.debug(`Export data as Print`);
+  ```
+- **Check for required dependencies**: Handled through hook dependencies and React useEffect
 
 ### 2. **State Preparation Phase**
 
@@ -91,9 +102,20 @@ apiRef.current.setState((state) => ({
 ```
 
 **Why virtualization is disabled**:
-- Virtualization only renders visible items for performance
-- Print needs all data rendered simultaneously
-- Ensures complete data capture for printing
+- **Virtualization only renders visible items for performance** - Normal grid operation uses virtualization to show only visible rows/columns
+- **Print needs all data rendered simultaneously** - Print requires all content to be in the DOM
+- **Ensures complete data capture for printing** - Without this, only visible rows would be printed:
+  ```typescript
+  previousVirtualizationState.current = apiRef.current.state.virtualization;
+  apiRef.current.setState((state) => ({
+    ...state,
+    virtualization: {
+      ...state.virtualization,
+      enabled: false,
+      enabledForColumns: false,
+    },
+  }));
+  ```
 
 ### 3. **Data Filtering Phase**
 
@@ -107,11 +129,33 @@ await updateGridColumnsForPrint(
 ```
 
 **Column Selection Logic**:
-1. If `fields` specified → Use only those columns
-2. If `allColumns` true → Include all columns (including hidden)
-3. If `allColumns` false → Use only visible columns
-4. Filter out columns with `disableExport: true`
-5. Optionally include checkbox selection column
+1. **If `fields` specified → Use only those columns**:
+   ```typescript
+   if (options.fields) {
+     return options.fields.reduce<GridStateColDef[]>((currentColumns, field) => {
+       const column = columns.find((col) => col.field === field);
+       if (column) {
+         currentColumns.push(column);
+       }
+       return currentColumns;
+     }, []);
+   }
+   ```
+2. **If `allColumns` true → Include all columns (including hidden)**:
+   ```typescript
+   const validColumns = options.allColumns ? columns : gridVisibleColumnDefinitionsSelector(apiRef);
+   ```
+3. **If `allColumns` false → Use only visible columns**
+4. **Filter out columns with `disableExport: true`**:
+   ```typescript
+   return validColumns.filter((column) => !column.disableExport);
+   ```
+5. **Optionally include checkbox selection column**:
+   ```typescript
+   if (includeCheckboxes) {
+     newColumnVisibilityModel[GRID_CHECKBOX_SELECTION_COL_DEF.field] = true;
+   }
+   ```
 
 #### Row Filtering
 ```typescript
@@ -165,9 +209,20 @@ function buildPrintWindow(title?: string): HTMLIFrameElement {
 ```
 
 **Design Decisions**:
-- **iframe Isolation**: Provides isolated printing environment
-- **Invisible**: Prevents UI disruption during preparation
-- **Title Setting**: Uses custom filename or document title
+- **iframe Isolation**: Provides isolated printing environment:
+  ```typescript
+  const iframeEl = document.createElement('iframe');
+  ```
+- **Invisible**: Prevents UI disruption during preparation:
+  ```typescript
+  iframeEl.style.position = 'absolute';
+  iframeEl.style.width = '0px';
+  iframeEl.style.height = '0px';
+  ```
+- **Title Setting**: Uses custom filename or document title:
+  ```typescript
+  iframeEl.title = title || document.title;
+  ```
 
 ### 5. **Content Preparation Phase**
 
@@ -489,12 +544,27 @@ const printOptions = {
 ## Cross-Browser Considerations
 
 ### Safari-Specific Issues
-- **Clone Isolation Bug**: Direct DOM node cloning fails in print context
-- **Workaround**: Use innerHTML copying instead of direct appendChild
+- **Clone Isolation Bug**: Direct DOM node cloning fails in print context:
+  ```typescript
+  // This doesn't work in Safari:
+  // printDoc.body.appendChild(gridClone);
+  ```
+- **Workaround**: Use innerHTML copying instead of direct appendChild:
+  ```typescript
+  const container = document.createElement('div');
+  container.appendChild(gridClone);
+  printDoc.body.innerHTML = container.innerHTML;
+  ```
 
 ### Chrome-Specific Issues  
-- **Print Dialog Layout**: CSS containment property needed for proper layout
-- **Empty Page Prevention**: Body margin reset required
+- **Print Dialog Layout**: CSS containment property needed for proper layout:
+  ```typescript
+  gridClone!.style.contain = 'size';
+  ```
+- **Empty Page Prevention**: Body margin reset required:
+  ```typescript
+  printDoc.body.style.marginTop = '0px';
+  ```
 
 ### Firefox Considerations
 - **Stylesheet Loading**: Different timing for external stylesheet loading
@@ -509,59 +579,212 @@ const printOptions = {
 ## Performance Considerations
 
 ### Memory Management
-- **State Snapshots**: Efficiently store and restore large state objects
-- **Reference Cleanup**: Clear all references after printing to prevent leaks
-- **iframe Removal**: Properly dispose of print iframe after completion
+- **State Snapshots**: Efficiently store and restore large state objects:
+  ```typescript
+  previousGridState.current = apiRef.current.exportState();
+  // Later...
+  apiRef.current.restoreState(previousGridState.current || {});
+  ```
+- **Reference Cleanup**: Clear all references after printing to prevent leaks:
+  ```typescript
+  previousGridState.current = null;
+  previousColumnVisibility.current = {};
+  previousRows.current = [];
+  ```
+- **iframe Removal**: Properly dispose of print iframe after completion:
+  ```typescript
+  doc.current!.body.removeChild(printWindow);
+  ```
 
 ### Virtualization Impact
-- **Temporary Disable**: Virtualization must be disabled during print preparation
+- **Temporary Disable**: Virtualization must be disabled during print preparation:
+  ```typescript
+  apiRef.current.setState((state) => ({
+    ...state,
+    virtualization: {
+      ...state.virtualization,
+      enabled: false,
+      enabledForColumns: false,
+    },
+  }));
+  ```
 - **Performance Cost**: Large datasets may cause temporary performance impact
-- **Restoration**: Virtualization is re-enabled after printing
+- **Restoration**: Virtualization is re-enabled after printing:
+  ```typescript
+  apiRef.current.setState((state) => ({
+    ...state,
+    virtualization: previousVirtualizationState.current!,
+  }));
+  ```
 
 ### Asynchronous Operations
-- **State Updates**: Use requestAnimationFrame to ensure DOM updates
-- **Stylesheet Loading**: Wait for external stylesheets before printing
-- **Print Detection**: Use media queries for print completion detection
+- **State Updates**: Use requestAnimationFrame to ensure DOM updates:
+  ```typescript
+  await raf(); // wait for the state changes to take action
+  ```
+- **Stylesheet Loading**: Wait for external stylesheets before printing:
+  ```typescript
+  Promise.all(stylesheetLoadPromises).then(() => {
+    printWindow.contentWindow!.print();
+  });
+  ```
+- **Print Detection**: Use media queries for print completion detection:
+  ```typescript
+  const mediaQueryList = printWindow.contentWindow!.matchMedia('print');
+  mediaQueryList.addEventListener('change', (mql) => {
+    const isAfterPrint = mql.matches === false;
+    if (isAfterPrint) {
+      handlePrintWindowAfterPrint(printWindow);
+    }
+  });
+  ```
 
 ## Integration with Grid Features
 
 ### Column Management
-- Respects `disableExport` column property
-- Handles column visibility states
-- Supports column grouping and nesting
+- **Respects `disableExport` column property**:
+  ```typescript
+  return validColumns.filter((column) => !column.disableExport);
+  ```
+- **Handles column visibility states**:
+  ```typescript
+  const newColumnVisibilityModel: Record<string, boolean> = {};
+  columns.forEach((column) => {
+    newColumnVisibilityModel[column.field] = exportedColumnFields.includes(column.field);
+  });
+  apiRef.current.setColumnVisibilityModel(newColumnVisibilityModel);
+  ```
+- **Supports column grouping and nesting**: Through `getColumnsToExport` utility function
 
 ### Row Selection
-- Integrates with row selection state
-- Supports custom row filtering functions
-- Handles pinned rows correctly
+- **Integrates with row selection state**:
+  ```typescript
+  const selectedRowsCount = gridRowSelectionCountSelector(apiRef);
+  if (selectedRowsCount > 0) {
+    const selectedRows = gridRowSelectionIdsSelector(apiRef);
+    return bodyRows.filter((id) => selectedRows.has(id));
+  }
+  ```
+- **Supports custom row filtering functions**:
+  ```typescript
+  updateGridRowsForPrint(options?.getRowsToExport ?? defaultGetRowsToExport);
+  ```
+- **Handles pinned rows correctly**:
+  ```typescript
+  const pinnedRows = gridPinnedRowsSelector(apiRef);
+  const topPinnedRowsIds = pinnedRows?.top?.map((row) => row.id) || [];
+  const bottomPinnedRowsIds = pinnedRows?.bottom?.map((row) => row.id) || [];
+  
+  bodyRows.unshift(...topPinnedRowsIds);
+  bodyRows.push(...bottomPinnedRowsIds);
+  ```
 
 ### Filtering and Sorting
-- Respects current filter state
-- Maintains sort order in print output
-- Handles tree data structures
+- **Respects current filter state**:
+  ```typescript
+  const filteredSortedRowIds = gridFilteredSortedRowIdsSelector(apiRef);
+  ```
+- **Maintains sort order in print output**:
+  ```typescript
+  previousRows.current = apiRef.current
+    .getSortedRows()
+    .filter((row) => !row[GRID_ID_AUTOGENERATED]);
+  ```
+- **Handles tree data structures**:
+  ```typescript
+  const rowTree = gridRowTreeSelector(apiRef);
+  const bodyRows = filteredSortedRowIds.filter((id) => rowTree[id].type !== 'footer');
+  ```
 
 ### Pagination
-- Temporarily adjusts pagination to show all data
-- Bypasses page size limits for printing
-- Restores original pagination after printing
+- **Temporarily adjusts pagination to show all data**:
+  ```typescript
+  if (props.pagination) {
+    const visibleRowCount = gridExpandedRowCountSelector(apiRef);
+    const paginationModel = { page: 0, pageSize: visibleRowCount };
+  }
+  ```
+- **Bypasses page size limits for printing**:
+  ```typescript
+  apiRef.current.setState((state) => ({
+    ...state,
+    pagination: {
+      ...state.pagination,
+      paginationModel: getDerivedPaginationModel(
+        state.pagination,
+        'DataGridPro', // Uses Pro signature to bypass 100-row limit
+        paginationModel,
+      ),
+    },
+  }));
+  ```
+- **Restores original pagination after printing**:
+  ```typescript
+  apiRef.current.restoreState(previousGridState.current || {});
+  ```
 
 ## Error Handling and Edge Cases
 
 ### Validation Checks
+**Ensure grid is ready for printing**:
 ```typescript
 if (!apiRef.current.rootElementRef!.current) {
   throw new Error('MUI X: No grid root element available.');
 }
 ```
+This check happens in the `exportDataAsPrint` function to ensure the grid DOM element exists before proceeding.
 
 ### Graceful Degradation
-- Missing print document handling
-- Stylesheet loading failures
-- Print dialog cancellation
+- **Missing print document handling**:
+  ```typescript
+  const printDoc = printWindow.contentDocument;
+  if (!printDoc) {
+    return; // Exit gracefully if iframe document not available
+  }
+  ```
+- **Stylesheet loading failures**: Handled through Promise.all with fallback:
+  ```typescript
+  Promise.all(stylesheetLoadPromises).then(() => {
+    printWindow.contentWindow!.print();
+  }).catch(() => {
+    // Print anyway if stylesheets fail to load
+    printWindow.contentWindow!.print();
+  });
+  ```
+- **Print dialog cancellation**: Media query listener handles cleanup:
+  ```typescript
+  const mediaQueryList = printWindow.contentWindow!.matchMedia('print');
+  mediaQueryList.addEventListener('change', (mql) => {
+    const isAfterPrint = mql.matches === false;
+    if (isAfterPrint) {
+      handlePrintWindowAfterPrint(printWindow);
+    }
+  });
+  ```
 
 ### Browser API Limitations
-- Print dialog blocking behavior
-- Stylesheet access restrictions
-- iframe security limitations
+- **Print dialog blocking behavior**: The `window.print()` call blocks execution:
+  ```typescript
+  if (process.env.NODE_ENV !== 'test') {
+    // Only trigger print in non-test environments
+    printWindow.contentWindow!.print();
+  }
+  ```
+- **Stylesheet access restrictions**: Some stylesheets may not be accessible due to CORS:
+  ```typescript
+  if (sheet) {
+    let styleCSS = '';
+    for (let j = 0; j < sheet.cssRules.length; j++) {
+      if (typeof sheet.cssRules[j].cssText === 'string') {
+        styleCSS += `${sheet.cssRules[j].cssText}\r\n`;
+      }
+    }
+  }
+  ```
+- **iframe security limitations**: Same-origin policy restrictions handled through proper iframe setup:
+  ```typescript
+  const printWindow = buildPrintWindow(options?.fileName);
+  doc.current!.body.appendChild(printWindow); // Must be same origin
+  ```
 
 This comprehensive printing system ensures that users can reliably print grid data across different browsers, with extensive customization options, while maintaining the grid's original state and performance characteristics.
