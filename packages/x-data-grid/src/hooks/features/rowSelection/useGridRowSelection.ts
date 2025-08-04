@@ -260,6 +260,54 @@ export const useGridRowSelection = (
 
         const selectionModel = gridRowSelectionStateSelector(apiRef);
 
+        // Special handling for exclude model when dealing with tree data propagation
+        // If we're deselecting from an exclude model with tree data, convert to include model
+        // to properly handle parent-child relationships
+        if (
+          !isSelected &&
+          selectionModel.type === 'exclude' &&
+          applyAutoSelection &&
+          isNestedData
+        ) {
+          // Convert exclude model to include model with all currently selected rows
+          const allRowIds = getRowsToBeSelected();
+          const currentlySelectedIds = new Set<GridRowId>();
+          
+          // Find all rows that are currently selected (not in exclude set)
+          for (const rowId of allRowIds) {
+            if (apiRef.current.isRowSelectable(rowId) && !selectionModel.ids.has(rowId)) {
+              currentlySelectedIds.add(rowId);
+            }
+          }
+          
+          // Remove the deselected row and its related rows based on propagation rules
+          const newSelectionModel: GridRowSelectionModel = {
+            type: 'include',
+            ids: new Set(currentlySelectedIds),
+          };
+          
+          const selectionManager = createRowSelectionManager(newSelectionModel);
+          const removeRow = (rowId: GridRowId) => {
+            selectionManager.unselect(rowId);
+          };
+          
+          // Remove the clicked row
+          removeRow(id);
+          
+          // Apply tree data propagation for deselection
+          findRowsToDeselect(
+            apiRef,
+            tree,
+            id,
+            props.rowSelectionPropagation?.descendants ?? false,
+            props.rowSelectionPropagation?.parents ?? false,
+            removeRow,
+          );
+          
+          apiRef.current.setRowSelectionModel(newSelectionModel, 'singleRowSelection');
+          return;
+        }
+
         const newSelectionModel: GridRowSelectionModel = {
           type: selectionModel.type,
           ids: new Set(selectionModel.ids),
@@ -313,6 +361,8 @@ export const useGridRowSelection = (
       props.rowSelectionPropagation?.descendants,
       props.rowSelectionPropagation?.parents,
       canHaveMultipleSelection,
+      isNestedData,
+      getRowsToBeSelected,
     ],
   );
 

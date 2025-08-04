@@ -297,6 +297,52 @@ describe('<DataGridPro /> - Row selection', () => {
     }).not.to.throw();
   });
 
+  // Bug reproduction: https://github.com/mui/mui-x/issues/XXXX
+  it('should allow unchecking individual rows after selecting all rows with controlled row selection', async () => {
+    let currentSelectionModel: GridRowSelectionModel;
+    function ControlledTreeDataGrid() {
+      const [rowSelectionModel, setRowSelectionModel] = React.useState<GridRowSelectionModel>(
+        includeRowSelection([]),
+      );
+      
+      const handleSelectionChange = React.useCallback((model: GridRowSelectionModel) => {
+        currentSelectionModel = model;
+        setRowSelectionModel(model);
+      }, []);
+      
+      return (
+        <TreeDataGrid
+          rowSelectionModel={rowSelectionModel}
+          onRowSelectionModelChange={handleSelectionChange}
+        />
+      );
+    }
+    const { user } = render(<ControlledTreeDataGrid />);
+
+    // Initially no rows should be selected
+    expect(apiRef.current?.getSelectedRows().size).to.equal(0);
+
+    // Click the header checkbox to select all rows
+    const headerCheckbox = document.querySelector('.MuiDataGrid-columnHeaderCheckbox input')!;
+    await user.click(headerCheckbox);
+
+    // Check that all rows are selected
+    expect(apiRef.current?.getSelectedRows().size).to.be.greaterThan(0);
+    const totalSelectedRows = apiRef.current?.getSelectedRows().size;
+    
+    // Verify we have an exclude model (typical for "select all")
+    expect(currentSelectionModel.type).to.equal('exclude');
+
+    // Try to uncheck an individual row (should work with the fix)
+    await user.click(getCell(1, 0).querySelector('input')!);
+    
+    // Should have fewer rows selected (considering tree data propagation)
+    expect(apiRef.current?.getSelectedRows().size).to.be.lessThan(totalSelectedRows!);
+    
+    // After individual deselection, model should convert to include type
+    expect(currentSelectionModel.type).to.equal('include');
+  });
+
   describe('prop: checkboxSelectionVisibleOnly = false', () => {
     it('should select all rows of all pages if no row is selected', async () => {
       const { user } = render(
