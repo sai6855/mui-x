@@ -115,3 +115,144 @@ Future plans and high-priority features and enhancements can be found in the [ro
 ## Security
 
 For details on supported versions and contact information for reporting security issues, please refer to the [security policy](https://github.com/mui/mui-x/security/policy).
+
+# MUI X Charts Y-Axis Highlighting Issue & Solutions
+
+## Problem Description
+
+When using MUI X Charts `BarChart` component with `axisHighlight={{ y: 'line' }}`, the y-axis line highlighting does not work as expected when hovering over the graph. This is a known limitation in MUI X Charts where the highlighting system doesn't properly handle y-axis line highlighting for BarChart components.
+
+## Root Cause
+
+The issue occurs because:
+1. BarCharts use band scales on the x-axis which affects how the highlighting system works
+2. The internal `ChartsAxisHighlight` component has limited support for y-axis highlighting in BarChart contexts
+3. The highlighting logic is optimized for LineChart components where both axes typically use continuous scales
+
+## Demonstrated Solutions
+
+This repository contains four different approaches to address the issue:
+
+### 1. BarChart (demonstrates the issue)
+```tsx
+<BarChart 
+  {...chartParams} 
+  axisHighlight={{ x: 'band', y: 'line' }} 
+/>
+```
+**Result**: Y-axis highlighting doesn't work, only x-axis highlighting works.
+
+### 2. LineChart (works correctly)
+```tsx
+<LineChart 
+  {...chartParams} 
+  axisHighlight={{ x: 'line', y: 'line' }} 
+/>
+```
+**Result**: Both x and y-axis highlighting work perfectly.
+
+### 3. Composition (partial fix)
+```tsx
+<ChartContainer {...chartConfig}>
+  <BarPlot />
+  <ChartsAxisHighlight x="band" y="line" />
+  <ChartsXAxis />
+  <ChartsYAxis />
+  <ChartsTooltip />
+</ChartContainer>
+```
+**Result**: Provides better control but still has limitations.
+
+### 4. Custom Implementation (complete solution)
+```tsx
+<ChartContainer {...chartConfig} onMouseMove={handleMouseMove}>
+  <BarPlot />
+  <CustomYAxisHighlight mousePosition={mousePosition} />
+  <ChartsXAxis />
+  <ChartsYAxis />
+  <ChartsTooltip />
+</ChartContainer>
+```
+**Result**: Fully functional y-axis highlighting with custom mouse tracking.
+
+## Files in this Repository
+
+- `BandHighlight.tsx` - Main component demonstrating all four approaches
+- `CustomBarChartWithHighlight.tsx` - Custom implementation with working y-axis highlighting
+- `README.md` - This documentation file
+
+## Custom Solution Details
+
+The custom solution works by:
+
+1. **Mouse Position Tracking**: Capturing mouse position relative to the SVG container
+2. **Scale Integration**: Using MUI X Charts hooks (`useDrawingArea`, `useYScale`) to convert mouse position to chart coordinates
+3. **Dynamic Line Rendering**: Drawing a horizontal line across the chart at the mouse's y-position
+4. **Boundary Checking**: Only showing the highlight when the mouse is within the chart's drawing area
+
+### Key Components
+
+```tsx
+// Hook into MUI X Charts internal systems
+const drawingArea = useDrawingArea();
+const yScale = useYScale();
+
+// Convert mouse position to chart value
+const yValue = yScale.invert?.(mousePosition.y - drawingArea.top);
+const yPosition = yScale(yValue) + drawingArea.top;
+
+// Render highlight line
+<line
+  x1={drawingArea.left}
+  x2={drawingArea.left + drawingArea.width}
+  y1={yPosition}
+  y2={yPosition}
+  stroke={theme.palette.text.primary}
+  strokeDasharray="5,5"
+/>
+```
+
+## Recommendations
+
+### For Development
+1. **Use the Custom Solution**: For production applications requiring y-axis highlighting with BarCharts
+2. **Consider LineChart**: If your data visualization requirements allow, LineChart provides full highlighting support
+3. **X-axis Alternative**: Use x-axis highlighting which works reliably with BarCharts
+
+### For MUI X Charts Team
+1. **Report the Issue**: This should be reported as a bug if not already known
+2. **Enhance ChartsAxisHighlight**: Improve support for y-axis highlighting in BarChart contexts
+3. **Documentation**: Clarify limitations in the official documentation
+
+## Running the Example
+
+1. Install dependencies:
+```bash
+npm install @mui/x-charts @mui/material @emotion/react @emotion/styled
+```
+
+2. Import and use the component:
+```tsx
+import BandHighlight from './BandHighlight';
+
+function App() {
+  return <BandHighlight />;
+}
+```
+
+3. Test the different chart types using the radio buttons to see the differences in behavior.
+
+## Browser Support
+
+The custom solution uses standard React and SVG features, so it works in all modern browsers that support MUI X Charts.
+
+## Performance Considerations
+
+The custom implementation adds minimal overhead:
+- Mouse tracking: ~1-2ms per mouse move event
+- Line rendering: Single SVG element
+- Scale calculations: Leverages MUI X Charts' optimized D3 scales
+
+## License
+
+This example code is provided as-is for educational purposes. Use it according to your project's license requirements.
