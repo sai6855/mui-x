@@ -27,7 +27,7 @@ const createContainsFilterFn =
     }
     const trimmedValue = disableTrim ? filterItem.value : filterItem.value.trim();
     const filterRegex = new RegExp(escapeRegExp(trimmedValue), 'i');
-    return (value: any): boolean => {
+    return (value: number | string | null) => {
       if (value == null) {
         return negate;
       }
@@ -44,7 +44,7 @@ const createEqualityFilterFn =
     const trimmedValue = disableTrim ? filterItem.value : filterItem.value.trim();
 
     const collator = new Intl.Collator(undefined, { sensitivity: 'base', usage: 'search' });
-    return (value: any): boolean => {
+    return (value: number | string | null) => {
       if (value == null) {
         return negate;
       }
@@ -54,7 +54,7 @@ const createEqualityFilterFn =
   };
 
 const createEmptyFilterFn = (negate: boolean) => () => {
-  return (value: any): boolean => {
+  return (value: number | string | null) => {
     const isEmpty = value === '' || value == null;
     return negate ? !isEmpty : isEmpty;
   };
@@ -92,7 +92,7 @@ export const getGridStringOperators = (
       const filterItemValue = disableTrim ? filterItem.value : filterItem.value.trim();
 
       const filterRegex = new RegExp(`^${escapeRegExp(filterItemValue)}.*$`, 'i');
-      return (value): boolean => {
+      return (value) => {
         return value != null ? filterRegex.test(value.toString()) : false;
       };
     },
@@ -107,7 +107,7 @@ export const getGridStringOperators = (
       const filterItemValue = disableTrim ? filterItem.value : filterItem.value.trim();
 
       const filterRegex = new RegExp(`.*${escapeRegExp(filterItemValue)}$`, 'i');
-      return (value): boolean => {
+      return (value) => {
         return value != null ? filterRegex.test(value.toString()) : false;
       };
     },
@@ -134,7 +134,7 @@ export const getGridStringOperators = (
         : filterItem.value.map((val) => val.trim());
       const collator = new Intl.Collator(undefined, { sensitivity: 'base', usage: 'search' });
 
-      return (value): boolean =>
+      return (value) =>
         value != null
           ? filterItemValue.some((filterValue: GridFilterItem['value']) => {
               return collator.compare(filterValue, value.toString() || '') === 0;
