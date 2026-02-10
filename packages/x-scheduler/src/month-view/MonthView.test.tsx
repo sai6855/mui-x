@@ -4,18 +4,20 @@ import {
   createSchedulerRenderer,
   DEFAULT_TESTING_VISIBLE_DATE,
   EventBuilder,
+  withinEventCalendarToolbar,
 } from 'test/utils/scheduler';
 import { screen, within } from '@mui/internal-test-utils';
 import { MonthView } from '@mui/x-scheduler/month-view';
-import { EventCalendarProvider } from '@mui/x-scheduler-headless/event-calendar-provider';
-import { EventCalendar } from '../event-calendar';
+import { EventCalendarProvider } from '../internals/components/EventCalendarProvider';
+import { EventCalendar, eventCalendarClasses } from '../event-calendar';
+import { EventDraggableDialogProvider } from '../internals/components/event-draggable-dialog';
 
 describe('<MonthView />', () => {
   const { render } = createSchedulerRenderer({ clockConfig: new Date('2025-05-01') });
 
   const events = [
-    EventBuilder.new().startAt('2025-05-01T09:00:00').title('Meeting').build(),
-    EventBuilder.new().startAt('2025-05-15T14:00:00').title('Doctor Appointment').build(),
+    EventBuilder.new().startAt('2025-05-01T09:00:00Z').title('Meeting').build(),
+    EventBuilder.new().startAt('2025-05-15T14:00:00Z').title('Doctor Appointment').build(),
   ];
 
   const standaloneDefaults = {
@@ -26,7 +28,9 @@ describe('<MonthView />', () => {
   it('should render the weekday headers, a cell for each day, and show the abbreviated month for day 1', () => {
     render(
       <EventCalendarProvider {...standaloneDefaults}>
-        <MonthView />
+        <EventDraggableDialogProvider>
+          <MonthView />
+        </EventDraggableDialogProvider>
       </EventCalendarProvider>,
     );
     const headerTexts = screen.getAllByRole('columnheader').map((header) => header.textContent);
@@ -40,7 +44,9 @@ describe('<MonthView />', () => {
   it('should render events in the correct cell', () => {
     render(
       <EventCalendarProvider {...standaloneDefaults}>
-        <MonthView />
+        <EventDraggableDialogProvider>
+          <MonthView />
+        </EventDraggableDialogProvider>
       </EventCalendarProvider>,
     );
 
@@ -61,7 +67,9 @@ describe('<MonthView />', () => {
         onViewChange={handleViewChange}
         onVisibleDateChange={handleVisibleDateChange}
       >
-        <MonthView />
+        <EventDraggableDialogProvider>
+          <MonthView />
+        </EventDraggableDialogProvider>
       </EventCalendarProvider>,
     );
     const button = screen.getByRole('button', { name: '15' });
@@ -71,14 +79,16 @@ describe('<MonthView />', () => {
     expect(handleViewChange.firstCall.firstArg).to.equal('day');
     expect(handleVisibleDateChange.calledOnce).to.equal(true);
     expect(handleVisibleDateChange.firstCall.firstArg).toEqualDateTime(
-      adapter.date('2025-05-15T00:00:00', 'default'),
+      adapter.date('2025-05-15T00:00:00Z', 'default'),
     );
   });
 
   it('should render day numbers as plain text when the day view is not enabled', () => {
     render(
       <EventCalendarProvider {...standaloneDefaults} views={['week', 'month']}>
-        <MonthView />
+        <EventDraggableDialogProvider>
+          <MonthView />
+        </EventDraggableDialogProvider>
       </EventCalendarProvider>,
     );
     expect(screen.queryByRole('button', { name: '15' })).to.equal(null);
@@ -87,16 +97,18 @@ describe('<MonthView />', () => {
 
   it('should show "+N more..." when there are more events than fit in a cell', () => {
     const manyEvents = [
-      EventBuilder.new().singleDay('2025-05-01T08:00:00').build(),
-      EventBuilder.new().singleDay('2025-05-01T14:09:00').build(),
-      EventBuilder.new().singleDay('2025-05-01T14:11:00').build(),
-      EventBuilder.new().singleDay('2025-05-01T13:09:00').build(),
-      EventBuilder.new().singleDay('2025-05-01T15:09:00').build(),
+      EventBuilder.new().singleDay('2025-05-01T08:00:00Z').build(),
+      EventBuilder.new().singleDay('2025-05-01T14:09:00Z').build(),
+      EventBuilder.new().singleDay('2025-05-01T14:11:00Z').build(),
+      EventBuilder.new().singleDay('2025-05-01T13:09:00Z').build(),
+      EventBuilder.new().singleDay('2025-05-01T15:09:00Z').build(),
     ];
 
     render(
       <EventCalendarProvider events={manyEvents} resources={[]}>
-        <MonthView />
+        <EventDraggableDialogProvider>
+          <MonthView />
+        </EventDraggableDialogProvider>
       </EventCalendarProvider>,
     );
     expect(screen.getByText(/more/i)).not.to.equal(null);
@@ -105,23 +117,23 @@ describe('<MonthView />', () => {
   describe('All day events', () => {
     const allDayEvents = [
       EventBuilder.new()
-        .span('2025-05-05T00:00:00', '2025-05-07T23:59:59', { allDay: true })
+        .span('2025-05-05T00:00:00Z', '2025-05-07T23:59:59Z', { allDay: true })
         .title('Multi-day Conference')
         .build(),
       EventBuilder.new()
-        .span('2025-04-28T00:00:00', '2025-05-06T23:59:59', { allDay: true }) // Previos week - Current week
+        .span('2025-04-28T00:00:00Z', '2025-05-06T23:59:59Z', { allDay: true }) // Previos week - Current week
         .title('Long Event')
         .build(),
       EventBuilder.new()
-        .span('2025-05-12T00:00:00', '2025-05-14T23:59:59', { allDay: true })
+        .span('2025-05-12T00:00:00Z', '2025-05-14T23:59:59Z', { allDay: true })
         .title('Grid Row Test')
         .build(),
       EventBuilder.new()
-        .span('2025-05-14T00:00:00', '2025-05-16T23:59:59', { allDay: true })
+        .span('2025-05-14T00:00:00Z', '2025-05-16T23:59:59Z', { allDay: true })
         .title('Three Day Event')
         .build(),
       EventBuilder.new()
-        .span('2025-05-06T00:00:00', '2025-05-16T23:59:59', { allDay: true })
+        .span('2025-05-06T00:00:00Z', '2025-05-16T23:59:59Z', { allDay: true })
         .title('Multiple week event')
         .build(),
     ];
@@ -129,10 +141,12 @@ describe('<MonthView />', () => {
     it('should render all-day events correctly with main event in start date cell', () => {
       render(
         <EventCalendarProvider
-          events={[EventBuilder.new().span('2025-05-04', '2025-05-07', { allDay: true }).build()]}
+          events={[EventBuilder.new().span('2025-05-04Z', '2025-05-07Z', { allDay: true }).build()]}
           resources={[]}
         >
-          <MonthView />
+          <EventDraggableDialogProvider>
+            <MonthView />
+          </EventDraggableDialogProvider>
         </EventCalendarProvider>,
       );
 
@@ -140,7 +154,7 @@ describe('<MonthView />', () => {
         return screen
           .getAllByRole('gridcell')
           .find((cell) => within(cell).queryByText(new RegExp(`^${date.toString()}`)))!
-          .querySelectorAll('.EventContainer');
+          .querySelectorAll(`.${eventCalendarClasses.dayGridEvent}`);
       };
 
       // Main event should render in the start date cell
@@ -157,7 +171,9 @@ describe('<MonthView />', () => {
     it('should render all-day event in first cell of week when event starts before the week', () => {
       render(
         <EventCalendarProvider events={allDayEvents} resources={[]}>
-          <MonthView />
+          <EventDraggableDialogProvider>
+            <MonthView />
+          </EventDraggableDialogProvider>
         </EventCalendarProvider>,
       );
 
@@ -172,7 +188,9 @@ describe('<MonthView />', () => {
     it('should place invisible events on the same grid row as the main event', () => {
       render(
         <EventCalendarProvider events={allDayEvents} resources={[]}>
-          <MonthView />
+          <EventDraggableDialogProvider>
+            <MonthView />
+          </EventDraggableDialogProvider>
         </EventCalendarProvider>,
       );
 
@@ -198,22 +216,24 @@ describe('<MonthView />', () => {
     it('should handle multiple overlapping all-day events with different grid rows', () => {
       const overlappingEvents = [
         EventBuilder.new()
-          .span('2025-05-12T00:00:00', '2025-05-14T23:59:59', { allDay: true })
+          .span('2025-05-12T00:00:00Z', '2025-05-14T23:59:59Z', { allDay: true })
           .title('Event 1')
           .build(),
         EventBuilder.new()
-          .span('2025-05-13T00:00:00', '2025-05-15T23:59:59', { allDay: true })
+          .span('2025-05-13T00:00:00Z', '2025-05-15T23:59:59Z', { allDay: true })
           .title('Event 2')
           .build(),
         EventBuilder.new()
-          .span('2025-05-16T00:00:00', '2025-05-17T23:59:59', { allDay: true })
+          .span('2025-05-16T00:00:00Z', '2025-05-17T23:59:59Z', { allDay: true })
           .title('Event 3')
           .build(),
       ];
 
       render(
         <EventCalendarProvider events={overlappingEvents} resources={[]}>
-          <MonthView />
+          <EventDraggableDialogProvider>
+            <MonthView />
+          </EventDraggableDialogProvider>
         </EventCalendarProvider>,
       );
 
@@ -241,7 +261,9 @@ describe('<MonthView />', () => {
     it('should render all-day events with correct grid column span', () => {
       render(
         <EventCalendarProvider events={allDayEvents} resources={[]}>
-          <MonthView />
+          <EventDraggableDialogProvider>
+            <MonthView />
+          </EventDraggableDialogProvider>
         </EventCalendarProvider>,
       );
 
@@ -258,7 +280,9 @@ describe('<MonthView />', () => {
     it('should render one visible event per row if event spans across multiple weeks', () => {
       render(
         <EventCalendarProvider events={allDayEvents} resources={[]}>
-          <MonthView />
+          <EventDraggableDialogProvider>
+            <MonthView />
+          </EventDraggableDialogProvider>
         </EventCalendarProvider>,
       );
 
@@ -285,7 +309,9 @@ describe('<MonthView />', () => {
         />,
       );
 
-      await user.click(screen.getByRole('button', { name: /previous month/i }));
+      const toolbar = withinEventCalendarToolbar();
+      // eslint-disable-next-line testing-library/prefer-screen-queries -- scoped query within toolbar
+      await user.click(toolbar.getByRole('button', { name: /previous month/i }));
       expect(onVisibleDateChange.lastCall.firstArg).toEqualDateTime(
         adapter.addMonths(adapter.startOfMonth(DEFAULT_TESTING_VISIBLE_DATE), -1),
       );
@@ -303,7 +329,9 @@ describe('<MonthView />', () => {
         />,
       );
 
-      await user.click(screen.getByRole('button', { name: /next month/i }));
+      const toolbar = withinEventCalendarToolbar();
+      // eslint-disable-next-line testing-library/prefer-screen-queries -- scoped query within toolbar
+      await user.click(toolbar.getByRole('button', { name: /next month/i }));
       expect(onVisibleDateChange.lastCall.firstArg).toEqualDateTime(
         adapter.addMonths(adapter.startOfMonth(DEFAULT_TESTING_VISIBLE_DATE), 1),
       );

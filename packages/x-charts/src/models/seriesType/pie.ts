@@ -24,11 +24,15 @@ export type PieValueType = {
 };
 
 export type DefaultizedPieValueType = PieValueType &
-  Omit<D3PieArcDatum<any>, 'data'> & { color: string; formattedValue: string };
+  Omit<D3PieArcDatum<any>, 'data' | 'hidden'> & {
+    color: string;
+    formattedValue: string;
+    hidden: boolean;
+  };
 
 export type ChartsPieSorting = 'none' | 'asc' | 'desc' | ((a: number, b: number) => number);
 
-export interface PieSeriesType<TData = PieValueType> extends CommonSeriesType<TData> {
+export interface PieSeriesType<TData = PieValueType> extends CommonSeriesType<TData, 'pie'> {
   type: 'pie';
   data: Readonly<TData[]>;
   /**

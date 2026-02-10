@@ -1,7 +1,7 @@
 import { type DefaultizedProps } from '@mui/x-internals/types';
 import { type CommonDefaultizedProps, type CommonSeriesType, type SeriesId } from './common';
 
-export interface RadarSeriesType extends CommonSeriesType<number> {
+export interface RadarSeriesType extends CommonSeriesType<number, 'radar'> {
   type: 'radar';
   data: number[];
   /**
@@ -31,4 +31,6 @@ export type RadarItemIdentifier = {
 export interface DefaultizedRadarSeriesType extends DefaultizedProps<
   RadarSeriesType,
   CommonDefaultizedProps | 'color'
-> {}
+> {
+  hidden: boolean;
+}
