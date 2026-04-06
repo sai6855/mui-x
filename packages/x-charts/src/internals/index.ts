@@ -19,8 +19,7 @@ export * from '../BarChart/useBarChartProps';
 export { processBarDataForPlot } from '../BarChart/useBarPlotData';
 export { useRadarChartProps } from '../RadarChart/useRadarChartProps';
 export * from '../ChartsContainer/useChartsContainerProps';
-export * from '../ChartContainer/useChartContainerProps';
-export * from '../ChartDataProvider/useChartDataProviderProps';
+export * from '../ChartsDataProvider/useChartsDataProviderProps';
 export * from './seriesSelectorOfType';
 export { useSkipAnimation } from '../hooks/useSkipAnimation';
 export { useRegisterPointerInteractions } from './plugins/featurePlugins/shared/useRegisterPointerInteractions';
@@ -59,6 +58,7 @@ export * from '../PieChart/PieChart.plugins';
 // utils
 export * from './configInit';
 export * from './getLabel';
+export * from './legendUtils';
 export * from './getChartPoint';
 export * from './isDefined';
 export * from './getScale';
@@ -79,10 +79,14 @@ export { getSeriesColorFn } from './getSeriesColorFn';
 export { checkBarChartScaleErrors } from '../BarChart/checkBarChartScaleErrors';
 export { getBandSize } from './getBandSize';
 export * from './plugins/utils/defaultSeriesConfig';
+export {
+  useUtilityClasses as useChartsTooltipUtilityClasses,
+  getChartsTooltipUtilityClass,
+} from '../ChartsTooltip/chartsTooltipClasses';
 
 // contexts
 export { getAxisExtrema } from './plugins/featurePlugins/useChartCartesianAxis/getAxisExtrema';
-export * from '../context/ChartProvider';
+export * from '../context/ChartsProvider';
 export * from '../context/ChartsSlotsContext';
 
 // series configuration
@@ -91,6 +95,7 @@ export * from '../models/seriesType/common';
 
 export * from '../models/z-axis';
 export * from '../models/axis';
+export * from '../models/seriesType/composition';
 
 export * from './plugins/models';
 export * from './material';

@@ -9,13 +9,7 @@ githubLabel: 'scope: scheduler'
 
 <p class="description">Display events correctly across different timezones.</p>
 
-{{"component": "@mui/docs/ComponentLinkHeader", "design": false}}
-
-:::warning
-This package is not published yet.
-:::
-
-TODO: Issue #20394 - Create documentation and demos
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader", "design": false}}
 
 ## Overview
 
@@ -95,6 +89,17 @@ It does not modify the event data or change when an event occurs.
 
 {{"demo": "TimezoneInstantBased.js", "bg": "inline", "defaultCodeOpen": false}}
 
+## Supported timezones
+
+Both the `displayTimezone` prop and the event's `timezone` field accept the following values:
+
+|            Timezone | Description                                                                                                                                                |
+| ------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|             `"UTC"` | Will use the [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)                                                        |
+|         `"default"` | Will use the default timezone of the date library                                                                                                          |
+|          `"system"` | Will use the system's local timezone                                                                                                                       |
+| IANA standard zones | Any [IANA](https://www.iana.org/time-zones) timezone, for example `"Europe/Paris"` or `"America/New_York"`. [Full list](https://timezonedb.com/time-zones) |
+
 ## Creating an event
 
 When creating events from the UI, the entered date/time is interpreted in the current `displayTimezone`.
@@ -116,7 +121,7 @@ const event = {
   start: '2024-03-01T08:00:00Z', // 09:00 in Paris (UTC+1 in winter)
   end: '2024-03-01T09:00:00Z',
   timezone: 'Europe/Paris',
-  rrule: { freq: 'DAILY' },
+  rrule: 'FREQ=DAILY',
 };
 ```
 

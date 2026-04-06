@@ -28,9 +28,9 @@
   "27": "MUI X Charts: Line series with id=\"%s\" has no data. The chart cannot render this series without data. Provide a data property to the series or use the dataset prop.",
   "28": "MUI X Charts: The %s was not found. This is required to compute the radar chart dataIndex. Ensure the radar chart is properly initialized with all required axes.",
   "29": "MUI X Charts: Scatter series with id=\"%s\" has incomplete datasetKeys. Properties %s are missing. Scatter plots require both \"x\" and \"y\" keys to map dataset values to coordinates. Add the missing datasetKeys to the series configuration.",
-  "30": "MUI X Charts: Could not find the Chart context. This happens when the component is rendered outside of a ChartsDataProvider or ChartsContainer parent component, which means the required context is not available. Wrap your component in a ChartsDataProvider or ChartsContainer. This can also happen if you are bundling multiple versions of the library.",
+  "30": "MUI X Charts: Could not find the Charts context. This happens when the component is rendered outside of a ChartsDataProvider or ChartsContainer parent component, which means the required context is not available. Wrap your component in a ChartsDataProvider or ChartsContainer. This can also happen if you are bundling multiple versions of the library.",
   "31": "MUI X Charts: Failed assertion - this component should not be rendered. This is an internal component used for styling purposes only. If you see this error, there may be a configuration issue with styled components.",
-  "32": "MUI X Charts: Could not find the charts context. This happens when the component is rendered outside of a ChartsContainer parent component. Wrap your component in a ChartsContainer or ChartsDataProvider.",
+  "32": "MUI X Charts: Could not find the Charts context. This happens when the component is rendered outside of a ChartsContainer parent component. Wrap your component in a ChartsContainer or ChartsDataProvider.",
   "33": "MUI X Charts: Bar series with id=\"%s\" has no data. The chart cannot render this series without data. Provide a data property to the series or use the dataset prop.",
   "34": "MUI X Charts: Series id \"%s\" is not unique. Each series must have a unique id to be properly identified and rendered. Provide a unique id for each series in your chart configuration.",
   "35": "MUI X Charts: Series id \"%s\" is not unique across series types. Each series must have a unique id even across different series types. Provide a unique id for each series in your chart configuration.",
@@ -44,7 +44,7 @@
   "43": "MUI X Charts: No identifier serializer found for series type \"%s\". This internal error occurs when the series configuration is incomplete.",
   "44": "MUI X Charts: range bar series with id='%s' has no data.\nEither provide a data property to the series or use the dataset prop.",
   "45": "MUI X Charts: range bar series with id='%s' has incomplete datasetKeys.\nProperties %s are missing.",
-  "46": "MUI X Charts: Sankey series context is missing. Ensure the SankeyPlot is used inside a properly configured ChartDataProviderPro.",
+  "46": "MUI X Charts: Sankey series context is missing. Ensure the SankeyPlot is used inside a properly configured ChartsDataProviderPro.",
   "47": "MUI X Charts: Sankey diagram contains circular references.",
   "48": "MUI X Charts: Point scale is not supported in FunnelChart. Please use band scale instead.",
   "49": "Expected prop '%s' to be of type Element",
@@ -199,5 +199,8 @@
   "198": "MUI X: RichTreeViewItems only supports flat DOM structure when virtualized.",
   "199": "MUI X: There is no ongoing reordering.",
   "200": "MUI X: Unimplemented: colspan feature is required",
-  "201": "MUI X: Unimplemented: rowspan feature is required"
+  "201": "MUI X: Unimplemented: rowspan feature is required",
+  "202": "MUI X Charts: Series with ID \"%s\" should have an x-axis of type \"band\". Candlestick charts require a band scale for the x-axis. Set the scaleType to \"band\" for this axis.",
+  "203": "MUI X Charts: OHLC series with id='%s' has no data.\nEither provide a data property to the series or use the dataset prop.",
+  "204": "MUI X Charts: OHLC series with id='%s' has incomplete datasetKeys.\nProperties %s are missing."
 }
