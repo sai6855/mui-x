@@ -219,6 +219,28 @@ The `data-drawing-container` attribute marks children as part of the drawing are
 See [Composition—clipping](/x/react-charts/composition/#clipping) for details.
 :::
 
+### Click events
+
+When composing a scatter chart, the placement of `onItemClick` depends on the [interaction](#interaction) mode.
+
+With the hit area enabled (the default) or with the `svg-batch` renderer, pass `onItemClick` to `ChartsDataProvider`:
+
+```jsx
+<ChartsDataProvider onItemClick={onItemClick}>
+  {/* ... */}
+  <ScatterPlot />
+</ChartsDataProvider>
+```
+
+Otherwise, pass it to `ScatterPlot`:
+
+```jsx
+<ChartsDataProvider>
+  {/* ... */}
+  <ScatterPlot onItemClick={onItemClick} disableHitArea />
+</ChartsDataProvider>
+```
+
 ### Regression line
 
 Add a regression line to a scatter plot by composing a custom chart and drawing the line yourself.
