@@ -1,6 +1,6 @@
 import composeClasses from '@mui/utils/composeClasses';
-import generateUtilityClass from '@mui/utils/generateUtilityClass';
-import generateUtilityClasses from '@mui/utils/generateUtilityClasses';
+import generateUtilityClass from '@mui/material/generateUtilityClass';
+import generateUtilityClasses from '@mui/material/generateUtilityClasses';
 
 export interface SankeyClasses {
   /** Styles applied to the root element. */

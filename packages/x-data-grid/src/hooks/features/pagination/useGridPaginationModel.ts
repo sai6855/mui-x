@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import debounce from '@mui/utils/debounce';
+import { debounce } from '@mui/material/utils';
 import type { RefObject } from '@mui/x-internals/types';
 import { isDeepEqual } from '@mui/x-internals/isDeepEqual';
 import type { GridPrivateApiCommunity } from '../../../models/api/gridApiCommunity';

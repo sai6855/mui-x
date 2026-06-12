@@ -2,7 +2,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import composeClasses from '@mui/utils/composeClasses';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import { forwardRef } from '@mui/x-internals/forwardRef';
 import { isMultipleRowSelectionEnabled } from '../../hooks/features/rowSelection/utils';
 import { useGridSelector } from '../../hooks/utils/useGridSelector';

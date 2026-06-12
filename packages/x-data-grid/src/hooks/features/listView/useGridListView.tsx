@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import type { RefObject } from '@mui/x-internals/types';
 import { warnOnce } from '@mui/x-internals/warning';
 import type { GridListViewColDef } from '../../../models/colDef/gridColDef';

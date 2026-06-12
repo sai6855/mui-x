@@ -1,7 +1,6 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import useForkRef from '@mui/utils/useForkRef';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useForkRef, useEventCallback, unstable_useId as useId } from '@mui/material/utils';
 import { styled, useTheme } from '@mui/material/styles';
 import MUIAutocomplete from '@mui/material/Autocomplete';
 import MUIBadge from '@mui/material/Badge';
@@ -39,7 +38,6 @@ import MUITabs from '@mui/material/Tabs';
 import MUITab from '@mui/material/Tab';
 import MUIToggleButton from '@mui/material/ToggleButton';
 import { forwardRef } from '@mui/x-internals/forwardRef';
-import useId from '@mui/utils/useId';
 import {
   GridAddIcon,
   GridArrowDownwardIcon,

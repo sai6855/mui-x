@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import HTMLElementType from '@mui/utils/HTMLElementType';
 import { useGridApiContext } from '../../../hooks/utils/useGridApiContext';
 import { GridMenu, type GridMenuProps } from '../GridMenu';

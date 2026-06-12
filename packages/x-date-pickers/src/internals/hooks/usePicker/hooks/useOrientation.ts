@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import { DateOrTimeViewWithMeridiem, PickerOrientation } from '../../../models';
 import { arrayIncludes } from '../../../utils/utils';
 

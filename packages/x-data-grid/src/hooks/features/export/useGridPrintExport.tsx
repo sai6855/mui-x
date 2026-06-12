@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import type { RefObject } from '@mui/x-internals/types';
-import ownerDocument from '@mui/utils/ownerDocument';
+import { ownerDocument } from '@mui/material/utils';
 import { loadStyleSheets } from '@mui/x-internals/export';
 import type { GridPrivateApiCommunity } from '../../../models/api/gridApiCommunity';
 import type { GridPrintExportApi } from '../../../models/api/gridPrintExportApi';

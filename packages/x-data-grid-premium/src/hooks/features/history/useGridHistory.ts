@@ -2,7 +2,7 @@
 import * as React from 'react';
 import type { RefObject } from '@mui/x-internals/types';
 import { isObjectEmpty } from '@mui/x-internals/isObjectEmpty';
-import debounce from '@mui/utils/debounce';
+import { debounce } from '@mui/material/utils';
 import {
   useGridEvent,
   useGridApiMethod,

@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import type { SeriesId } from '@mui/x-charts/internals';
 import { useInteractionItemProps } from '@mui/x-charts/internals';
 import type { SankeyLayoutNode, SankeyNodeIdentifierWithData } from './sankey.types';

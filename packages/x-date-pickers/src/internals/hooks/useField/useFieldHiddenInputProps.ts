@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import { PickerAnyManager } from '../../models/manager';
 import { UseFieldStateReturnValue } from './useFieldState';
 

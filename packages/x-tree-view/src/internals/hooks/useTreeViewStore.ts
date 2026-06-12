@@ -1,6 +1,6 @@
 'use client';
 import { useRefWithInit } from '@base-ui/utils/useRefWithInit';
-import { useIsoLayoutEffect } from '@base-ui/utils/useIsoLayoutEffect';
+import { unstable_useEnhancedEffect as useIsoLayoutEffect } from '@mui/material/utils';
 import { useOnMount } from '@base-ui/utils/useOnMount';
 import { useRtl } from '@mui/system/RtlProvider';
 import { TreeViewAnyStore } from '../models';

@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 import { GridMenu, useGridSelector } from '@mui/x-data-grid-pro';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import { useGridRootProps } from '../../hooks/utils/useGridRootProps';
 import type { FieldTransferObject } from './GridPivotPanelBody';
 import { useGridPrivateApiContext } from '../../hooks/utils/useGridPrivateApiContext';

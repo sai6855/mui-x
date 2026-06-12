@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { useRtl } from '@mui/system/RtlProvider';
 import { styled, useThemeProps } from '@mui/material/styles';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import composeClasses from '@mui/utils/composeClasses';
 import { usePickerAdapter, usePickerTranslations } from '../hooks';
 import { useNow } from '../internals/hooks/useUtils';

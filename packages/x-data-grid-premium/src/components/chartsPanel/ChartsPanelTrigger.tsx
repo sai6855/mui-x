@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import { forwardRef } from '@mui/x-internals/forwardRef';
 import { useComponentRenderer } from '@mui/x-internals/useComponentRenderer';
 import type { RenderProp } from '@mui/x-data-grid-pro/internals';

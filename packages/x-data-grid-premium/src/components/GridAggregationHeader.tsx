@@ -1,5 +1,5 @@
 import composeClasses from '@mui/utils/composeClasses';
-import capitalize from '@mui/utils/capitalize';
+import { capitalize } from '@mui/material/utils';
 import { styled } from '@mui/material/styles';
 import {
   getDataGridUtilityClass,

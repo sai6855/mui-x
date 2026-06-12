@@ -3,7 +3,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import HTMLElementType from '@mui/utils/HTMLElementType';
 import { styled } from '@mui/material/styles';
 import { isHideMenuKey } from '../../utils/keyboardUtils';

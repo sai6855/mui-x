@@ -1,5 +1,5 @@
 import useSlotProps from '@mui/utils/useSlotProps';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import { useLicenseVerifier } from '@mui/x-license/internals';
 import { PickersLayout } from '@mui/x-date-pickers/PickersLayout';
 import {

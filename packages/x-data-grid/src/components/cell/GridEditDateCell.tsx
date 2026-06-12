@@ -2,7 +2,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import composeClasses from '@mui/utils/composeClasses';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import { styled } from '@mui/material/styles';
 import { NotRendered } from '../../utils/assert';
 import type { GridSlotProps } from '../../models/gridSlotsComponent';

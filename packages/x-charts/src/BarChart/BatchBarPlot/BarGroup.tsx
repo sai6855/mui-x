@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import { useStore } from '../../internals/store/useStore';
 import { selectorChartDrawingArea } from '../../internals/plugins/corePlugins/useChartDimensions';
 import { ANIMATION_DURATION_MS } from '../../internals/animation/animation';

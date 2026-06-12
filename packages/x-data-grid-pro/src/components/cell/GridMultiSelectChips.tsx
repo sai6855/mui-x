@@ -2,8 +2,7 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import { styled } from '@mui/material/styles';
-import useForkRef from '@mui/utils/useForkRef';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { useForkRef, unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import {
   gridClasses,
   gridResizingColumnFieldSelector,

@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import { type ChartsAxisProps } from '../ChartsAxis';
 import { type ChartsAxisHighlightProps } from '../ChartsAxisHighlight';
 import { type ChartsClipPathProps } from '../ChartsClipPath';

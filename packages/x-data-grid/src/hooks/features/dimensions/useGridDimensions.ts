@@ -22,7 +22,7 @@ import {
 } from '../columns';
 import { gridDimensionsSelector } from './gridDimensionsSelectors';
 import { gridDensityFactorSelector } from '../density';
-import { getValidRowHeight, rowHeightWarning } from '../rows/gridRowsUtils';
+import { getValidRowHeight } from '../rows/gridRowsUtils';
 import { getTotalHeaderHeight } from '../columns/gridColumnsUtils';
 import type { GridStateInitializer } from '../../utils/useGridInitializeState';
 import { DATA_GRID_PROPS_DEFAULT_VALUES } from '../../../constants/dataGridPropsDefaultValues';
@@ -234,7 +234,6 @@ function getStaticDimensions(
   const validRowHeight = getValidRowHeight(
     props.rowHeight,
     DATA_GRID_PROPS_DEFAULT_VALUES.rowHeight,
-    rowHeightWarning,
   );
 
   return {

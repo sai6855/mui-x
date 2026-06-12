@@ -1,4 +1,4 @@
-import ownerDocument from '@mui/utils/ownerDocument';
+import { ownerDocument } from '@mui/material/utils';
 import { PickerValidValue } from '../../models';
 import { getActiveElement } from '../../utils/utils';
 import { UseFieldDOMGetters } from './useField.types';

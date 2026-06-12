@@ -8,7 +8,7 @@ import {
   gridRowsLoadingSelector,
   gridRowsLookupSelector,
 } from '@mui/x-data-grid-pro';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import useOnMount from '@mui/utils/useOnMount';
 import type { RefObject } from '@mui/x-internals/types';
 import {

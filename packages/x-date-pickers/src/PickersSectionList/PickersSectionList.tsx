@@ -3,7 +3,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import useSlotProps from '@mui/utils/useSlotProps';
 import composeClasses from '@mui/utils/composeClasses';
-import useForkRef from '@mui/utils/useForkRef';
+import { useForkRef } from '@mui/material/utils';
 import { styled, useThemeProps } from '@mui/material/styles';
 import {
   getPickersSectionListUtilityClass,

@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 
 export function useMounted(defer = false) {
   const [mountedState, setMountedState] = React.useState(false);

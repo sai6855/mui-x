@@ -2,8 +2,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import useForkRef from '@mui/utils/useForkRef';
-import capitalize from '@mui/utils/capitalize';
+import { useForkRef, capitalize } from '@mui/material/utils';
 import composeClasses from '@mui/utils/composeClasses';
 import type { SxProps } from '@mui/system';
 import type { Theme } from '@mui/material/styles';

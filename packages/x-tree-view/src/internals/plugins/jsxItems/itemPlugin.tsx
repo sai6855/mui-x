@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useStore } from '@mui/x-internals/store';
 import { useMergedRefs } from '@base-ui/utils/useMergedRefs';
-import { useIsoLayoutEffect } from '@base-ui/utils/useIsoLayoutEffect';
+import { unstable_useEnhancedEffect as useIsoLayoutEffect } from '@mui/material/utils';
 import { useRefWithInit } from '@base-ui/utils/useRefWithInit';
 import { TreeItemWrapper, TreeViewItemPlugin } from '../../models';
 import { useTreeViewContext } from '../../TreeViewProvider';

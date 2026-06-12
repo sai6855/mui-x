@@ -7,7 +7,7 @@ import {
   useStore,
 } from '@mui/x-charts/internals';
 import { alpha } from '@mui/system';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import { selectorChartAxisZoomData } from '../../internals/plugins/useChartProZoom';
 import { ChartsAxisZoomSliderPreviewContent } from './ChartsAxisZoomSliderPreviewContent';
 

@@ -1,6 +1,6 @@
 import { Theme } from '@mui/material/styles';
 import { SxProps, SystemStyleObject } from '@mui/system';
-import ownerDocument from '@mui/utils/ownerDocument';
+import { ownerDocument } from '@mui/material/utils';
 import * as React from 'react';
 
 /* Use it instead of .includes method for IE support */

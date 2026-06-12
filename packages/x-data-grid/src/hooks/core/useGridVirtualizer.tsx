@@ -1,6 +1,6 @@
 import * as React from 'react';
 import useLazyRef from '@mui/utils/useLazyRef';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import { useRtl } from '@mui/system/RtlProvider';
 import { roundToDecimalPlaces } from '@mui/x-internals/math';
 import { lruMemoize } from '@mui/x-internals/lruMemoize';
@@ -34,11 +34,7 @@ import { gridPaginationSelector } from '../features/pagination';
 import { gridFocusedVirtualCellSelector } from '../features/virtualization/gridFocusedVirtualCellSelector';
 import { gridRowSelectionManagerSelector } from '../features/rowSelection';
 import { DATA_GRID_PROPS_DEFAULT_VALUES } from '../../constants/dataGridPropsDefaultValues';
-import {
-  getValidRowHeight,
-  minimalContentHeight,
-  rowHeightWarning,
-} from '../features/rows/gridRowsUtils';
+import { getValidRowHeight, minimalContentHeight } from '../features/rows/gridRowsUtils';
 import { getTotalHeaderHeight } from '../features/columns/gridColumnsUtils';
 import { useGridOverlays } from '../features/overlays/useGridOverlays';
 import { useGridRootProps } from '../utils/useGridRootProps';
@@ -117,7 +113,6 @@ export function useGridVirtualizer() {
   const baseRowHeight = getValidRowHeight(
     rootProps.rowHeight,
     DATA_GRID_PROPS_DEFAULT_VALUES.rowHeight,
-    rowHeightWarning,
   );
   const rowHeight = Math.floor(baseRowHeight * density);
   const headerHeight = Math.floor(rootProps.columnHeaderHeight * density);

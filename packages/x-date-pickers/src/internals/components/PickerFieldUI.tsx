@@ -1,7 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEventCallback from '@mui/utils/useEventCallback';
-import useForkRef from '@mui/utils/useForkRef';
+import { useEventCallback, useForkRef } from '@mui/material/utils';
 import resolveComponentProps from '@mui/utils/resolveComponentProps';
 import MuiIconButton, { IconButtonProps } from '@mui/material/IconButton';
 import MuiInputAdornment, { InputAdornmentProps } from '@mui/material/InputAdornment';

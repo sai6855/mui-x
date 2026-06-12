@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { warnOnce } from '@mui/x-internals/warning';
 import { styled, useThemeProps, type SxProps, type Theme } from '@mui/material/styles';
-import useForkRef from '@mui/utils/useForkRef';
-import useId from '@mui/utils/useId';
+import { useForkRef, unstable_useId as useId } from '@mui/material/utils';
 import { useUtilityClasses } from '../ChartsSurface/chartsSurfaceClasses';
 import {
   selectorChartPropsHeight,

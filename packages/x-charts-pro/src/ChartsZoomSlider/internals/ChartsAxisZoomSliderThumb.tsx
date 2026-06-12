@@ -2,8 +2,7 @@
 
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import useForkRef from '@mui/utils/useForkRef';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useForkRef, useEventCallback } from '@mui/material/utils';
 import { rafThrottle } from '@mui/x-internals/rafThrottle';
 import clsx from 'clsx';
 import {

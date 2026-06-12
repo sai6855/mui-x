@@ -5,9 +5,11 @@ import { styled, useThemeProps } from '@mui/material/styles';
 import composeClasses from '@mui/utils/composeClasses';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import useForkRef from '@mui/utils/useForkRef';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
-import useEventCallback from '@mui/utils/useEventCallback';
+import {
+  useForkRef,
+  unstable_useEnhancedEffect as useEnhancedEffect,
+  useEventCallback,
+} from '@mui/material/utils';
 import {
   MultiSectionDigitalClockSectionClasses,
   getMultiSectionDigitalClockSectionUtilityClass,

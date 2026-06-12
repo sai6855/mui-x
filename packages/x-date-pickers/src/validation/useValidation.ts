@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import { MuiPickersAdapter, OnErrorProps, PickersTimezone } from '../models';
 import type { PickerValueManager } from '../internals/models';
 import { PickerValidValue } from '../internals/models';

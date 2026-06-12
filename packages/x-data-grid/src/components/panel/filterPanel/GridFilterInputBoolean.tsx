@@ -2,7 +2,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import refType from '@mui/utils/refType';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import { useGridRootProps } from '../../../hooks/utils/useGridRootProps';
 import type { TextFieldProps } from '../../../models/gridBaseSlots';
 import type { GridFilterInputValueProps } from '../../../models/gridFilterInputComponent';

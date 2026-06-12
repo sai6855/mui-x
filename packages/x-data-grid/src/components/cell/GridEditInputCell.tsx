@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import composeClasses from '@mui/utils/composeClasses';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import { styled } from '@mui/material/styles';
 import { forwardRef } from '@mui/x-internals/forwardRef';
 import { NotRendered } from '../../utils/assert';

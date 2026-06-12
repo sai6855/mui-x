@@ -6,7 +6,7 @@ import {
   type GridEventListener,
 } from '@mui/x-data-grid';
 import { runIf, getVisibleRows } from '@mui/x-data-grid/internals';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import type { GridRowScrollEndParams } from '../../../models';
 import type { GridPrivateApiPro } from '../../../models/gridApiPro';
 import type { DataGridProProcessedProps } from '../../../models/dataGridProProps';

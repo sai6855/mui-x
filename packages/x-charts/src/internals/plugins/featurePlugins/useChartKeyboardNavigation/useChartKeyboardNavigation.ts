@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import { selectorChartDefaultizedSeries } from '../../corePlugins/useChartSeries/useChartSeries.selectors';
 import { selectorChartSeriesConfig } from '../../corePlugins/useChartSeriesConfig';
 import type { ChartPlugin } from '../../models';

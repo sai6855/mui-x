@@ -1,5 +1,5 @@
-import generateUtilityClass from '@mui/utils/generateUtilityClass';
-import generateUtilityClasses from '@mui/utils/generateUtilityClasses';
+import generateUtilityClass from '@mui/material/generateUtilityClass';
+import generateUtilityClasses from '@mui/material/generateUtilityClasses';
 import { TreeViewClasses } from '@mui/x-tree-view/internals';
 
 export interface RichTreeViewProClasses extends TreeViewClasses {}

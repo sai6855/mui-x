@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import { useStoreEffect } from '@mui/x-internals/store';
 import { useAssertModelConsistency } from '@mui/x-internals/useAssertModelConsistency';
 import { warnOnce } from '@mui/x-internals/warning';

@@ -1,4 +1,4 @@
-import generateUtilityClasses from '@mui/utils/generateUtilityClasses';
+import generateUtilityClasses from '@mui/material/generateUtilityClasses';
 
 export interface BrushOverlayClasses {
   /** Styles applied to the root element. */

@@ -10,10 +10,12 @@ import {
   selectorChartXAxisWithDomains,
   selectorChartYAxisWithDomains,
 } from '@mui/x-charts/internals';
-import debounce from '@mui/utils/debounce';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import {
+  debounce,
+  unstable_useEnhancedEffect as useEnhancedEffect,
+  useEventCallback,
+} from '@mui/material/utils';
 import { useEffectAfterFirstRender } from '@mui/x-internals/useEffectAfterFirstRender';
-import { useEventCallback } from '@mui/material/utils';
 import { isDeepEqual } from '@mui/x-internals/isDeepEqual';
 import {
   getRangeButtonDomainParams,

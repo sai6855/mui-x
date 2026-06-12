@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import { type ChartPlugin } from '../../models';
 import { type SeriesId } from '../../../../models/seriesType/common';
 import { type UseProgressiveRenderingSignature } from './useProgressiveRendering.types';

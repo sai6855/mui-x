@@ -1,4 +1,4 @@
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import {
   executeInTheNextEventLoopTick,
   getActiveElement,

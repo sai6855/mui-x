@@ -1,5 +1,5 @@
-import generateUtilityClass from '@mui/utils/generateUtilityClass';
-import generateUtilityClasses from '@mui/utils/generateUtilityClasses';
+import generateUtilityClass from '@mui/material/generateUtilityClass';
+import generateUtilityClasses from '@mui/material/generateUtilityClasses';
 import composeClasses from '@mui/utils/composeClasses';
 import type { PiecewiseColorLegendProps } from './PiecewiseColorLegend';
 import type { ChartsLegendSlotExtension } from './chartsLegend.types';

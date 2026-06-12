@@ -9,7 +9,7 @@ import {
   useGridSelector,
 } from '@mui/x-data-grid';
 import refType from '@mui/utils/refType';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import { gridHeaderFilteringMenuSelector } from '@mui/x-data-grid/internals';
 import { useGridRootProps } from '../../hooks/utils/useGridRootProps';
 

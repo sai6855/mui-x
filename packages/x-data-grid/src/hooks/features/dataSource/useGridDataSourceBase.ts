@@ -2,8 +2,7 @@
 import * as React from 'react';
 import type { RefObject } from '@mui/x-internals/types';
 import useLazyRef from '@mui/utils/useLazyRef';
-import useEventCallback from '@mui/utils/useEventCallback';
-import debounce from '@mui/utils/debounce';
+import { useEventCallback, debounce } from '@mui/material/utils';
 import { warnOnce } from '@mui/x-internals/warning';
 import { isDeepEqual } from '@mui/x-internals/isDeepEqual';
 import { GRID_ROOT_GROUP_ID } from '../rows/gridRowsUtils';

@@ -1,4 +1,4 @@
-import ownerDocument from '@mui/utils/ownerDocument';
+import { ownerDocument } from '@mui/material/utils';
 import { loadStyleSheets } from '@mui/x-internals/export';
 import { copyCanvasesContent, createExportIframe } from './common';
 import { type ChartPrintExportOptions } from './useChartProExport.types';

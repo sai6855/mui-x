@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import { isHTMLElement } from '@mui/x-internals/domUtils';
 import { MuiPickersAdapter, PickersTimezone, PickerValidDate } from '@mui/x-date-pickers/models';
 import { PickerRangeValue } from '@mui/x-date-pickers/internals';

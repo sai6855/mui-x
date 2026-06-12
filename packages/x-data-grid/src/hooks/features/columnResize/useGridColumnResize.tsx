@@ -1,8 +1,7 @@
 'use client';
 import * as React from 'react';
 import type { RefObject } from '@mui/x-internals/types';
-import useEventCallback from '@mui/utils/useEventCallback';
-import ownerDocument from '@mui/utils/ownerDocument';
+import { useEventCallback, ownerDocument } from '@mui/material/utils';
 import useLazyRef from '@mui/utils/useLazyRef';
 import { useRtl } from '@mui/system/RtlProvider';
 import {

@@ -1,8 +1,7 @@
 'use client';
 import * as React from 'react';
 import type { RefObject } from '@mui/x-internals/types';
-import ownerDocument from '@mui/utils/ownerDocument';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { ownerDocument, useEventCallback } from '@mui/material/utils';
 import {
   type GridPipeProcessor,
   type GridStateInitializer,

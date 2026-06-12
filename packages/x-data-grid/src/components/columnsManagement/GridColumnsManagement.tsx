@@ -3,7 +3,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import composeClasses from '@mui/utils/composeClasses';
-import debounce from '@mui/utils/debounce';
+import { debounce } from '@mui/material/utils';
 import { styled } from '@mui/material/styles';
 import { inputBaseClasses } from '@mui/material/InputBase';
 import type { TextFieldProps } from '../../models/gridBaseSlots';

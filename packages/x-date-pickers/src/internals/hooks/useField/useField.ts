@@ -1,8 +1,10 @@
 'use client';
 import * as React from 'react';
-import useForkRef from '@mui/utils/useForkRef';
-import useEventCallback from '@mui/utils/useEventCallback';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import {
+  useForkRef,
+  useEventCallback,
+  unstable_useEnhancedEffect as useEnhancedEffect,
+} from '@mui/material/utils';
 import { warnOnce } from '@mui/x-internals/warning';
 import { parseSelectedSections } from './useField.utils';
 import {

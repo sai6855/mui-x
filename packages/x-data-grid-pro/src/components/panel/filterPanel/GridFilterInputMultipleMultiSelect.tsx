@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import type { GridMultiSelectColDef } from '@mui/x-data-grid';
 import { useGridRootProps } from '@mui/x-data-grid';
 import { getValueOptions, isMultiSelectColDef } from '@mui/x-data-grid/internals';

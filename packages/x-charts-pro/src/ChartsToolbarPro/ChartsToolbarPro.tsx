@@ -12,7 +12,7 @@ import {
   type AxisId,
 } from '@mui/x-charts/internals';
 import { useChartsLocalization } from '@mui/x-charts/hooks';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import { ChartsToolbarDivider } from './internals/ChartsToolbarDivider';
 import { ChartsMenu } from './internals/ChartsMenu';
 import { selectorChartZoomIsEnabled } from '../internals/plugins/useChartProZoom';

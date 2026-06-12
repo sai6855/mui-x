@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import { styled } from '@mui/material/styles';
 import composeClasses from '@mui/utils/composeClasses';
 import { GridMenu } from '../menu/GridMenu';

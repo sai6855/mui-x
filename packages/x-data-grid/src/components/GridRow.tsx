@@ -2,7 +2,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import useForkRef from '@mui/utils/useForkRef';
+import { useForkRef } from '@mui/material/utils';
 import { fastMemo } from '@mui/x-internals/fastMemo';
 import { forwardRef } from '@mui/x-internals/forwardRef';
 import { isObjectEmpty } from '@mui/x-internals/isObjectEmpty';

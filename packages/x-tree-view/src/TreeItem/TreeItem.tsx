@@ -3,7 +3,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import CircularProgress from '@mui/material/CircularProgress';
-import unsupportedProp from '@mui/utils/unsupportedProp';
+import { unsupportedProp } from '@mui/material/utils';
 import Collapse from '@mui/material/Collapse';
 import MuiCheckbox, { CheckboxProps } from '@mui/material/Checkbox';
 import useSlotProps from '@mui/utils/useSlotProps';

@@ -1,9 +1,11 @@
 'use client';
 import * as React from 'react';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
-import useEventCallback from '@mui/utils/useEventCallback';
-import useForkRef from '@mui/utils/useForkRef';
-import useId from '@mui/utils/useId';
+import {
+  unstable_useEnhancedEffect as useEnhancedEffect,
+  useEventCallback,
+  useForkRef,
+  unstable_useId as useId,
+} from '@mui/material/utils';
 import {
   PickerViewsRendererProps,
   UsePickerParameters,

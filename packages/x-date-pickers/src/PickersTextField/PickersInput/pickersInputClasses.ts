@@ -1,5 +1,5 @@
-import generateUtilityClasses from '@mui/utils/generateUtilityClasses';
-import generateUtilityClass from '@mui/utils/generateUtilityClass';
+import generateUtilityClasses from '@mui/material/generateUtilityClasses';
+import generateUtilityClass from '@mui/material/generateUtilityClass';
 import { PickersInputBaseClasses, pickersInputBaseClasses } from '../PickersInputBase';
 
 export interface PickersInputClasses extends PickersInputBaseClasses {

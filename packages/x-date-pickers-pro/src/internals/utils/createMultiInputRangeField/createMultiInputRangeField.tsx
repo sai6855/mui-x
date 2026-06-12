@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { styled, useThemeProps } from '@mui/material/styles';
 import composeClasses from '@mui/utils/composeClasses';
 import useSlotProps from '@mui/utils/useSlotProps';
-import useForkRef from '@mui/utils/useForkRef';
+import { useForkRef } from '@mui/material/utils';
 import {
   cleanFieldResponse,
   useFieldOwnerState,

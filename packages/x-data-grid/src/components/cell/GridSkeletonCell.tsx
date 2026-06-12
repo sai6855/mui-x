@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
-import capitalize from '@mui/utils/capitalize';
+import { capitalize } from '@mui/material/utils';
 import { fastMemo } from '@mui/x-internals/fastMemo';
 import { createRandomNumberGenerator } from '../../utils/utils';
 import { useGridRootProps } from '../../hooks/utils/useGridRootProps';

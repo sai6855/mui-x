@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
 import { styled } from '@mui/material/styles';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
-import useEventCallback from '@mui/utils/useEventCallback';
+import {
+  unstable_useEnhancedEffect as useEnhancedEffect,
+  useEventCallback,
+} from '@mui/material/utils';
 import type {
   GridRenderEditCellParams,
   GridMultiSelectColDef,

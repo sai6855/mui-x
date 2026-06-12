@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import { type ChartsGridProps } from '@mui/x-charts/ChartsGrid';
 import { type ChartsWrapperProps } from '@mui/x-charts/ChartsWrapper';
 import { type ChartsOverlayProps } from '@mui/x-charts/ChartsOverlay';

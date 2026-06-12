@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import capitalize from '@mui/utils/capitalize';
+import { capitalize } from '@mui/material/utils';
 import HTMLElementType from '@mui/utils/HTMLElementType';
 import {
   useGridRootProps,

@@ -7,7 +7,7 @@ import {
   useTimeout,
   gridHorizontalScrollbarHeightSelector,
 } from '@mui/x-data-grid/internals';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import { styled } from '@mui/material/styles';
 import type { GridPrivateApiPro } from '../../../models/gridApiPro';
 import type { DataGridProProcessedProps } from '../../../models/dataGridProProps';

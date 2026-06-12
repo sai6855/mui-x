@@ -1,6 +1,6 @@
-import generateUtilityClass from '@mui/utils/generateUtilityClass';
+import generateUtilityClass from '@mui/material/generateUtilityClass';
 import composeClasses from '@mui/utils/composeClasses';
-import generateUtilityClasses from '@mui/utils/generateUtilityClasses';
+import generateUtilityClasses from '@mui/material/generateUtilityClasses';
 import { type SeriesId } from '../models/seriesType/common';
 
 export interface BarClasses {

@@ -1,5 +1,5 @@
 import { type ChartsWrapperProps } from '@mui/x-charts/ChartsWrapper';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import { interpolateRgbBasis } from '@mui/x-charts-vendor/d3-interpolate';
 import * as React from 'react';
 import { DEFAULT_X_AXIS_KEY, DEFAULT_Y_AXIS_KEY } from '@mui/x-charts/constants';

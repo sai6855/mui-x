@@ -1,8 +1,7 @@
 'use client';
 import * as React from 'react';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId, capitalize } from '@mui/material/utils';
 import composeClasses from '@mui/utils/composeClasses';
-import capitalize from '@mui/utils/capitalize';
 import { useRtl } from '@mui/system/RtlProvider';
 import { useGridPrivateApiContext } from '../../hooks/utils/useGridPrivateApiContext';
 import { doesSupportPreventScroll } from '../../utils/doesSupportPreventScroll';

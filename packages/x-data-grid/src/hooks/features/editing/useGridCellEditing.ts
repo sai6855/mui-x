@@ -2,8 +2,10 @@
 import * as React from 'react';
 import type { RefObject } from '@mui/x-internals/types';
 import { warnOnce } from '@mui/x-internals/warning';
-import useEventCallback from '@mui/utils/useEventCallback';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import {
+  useEventCallback,
+  unstable_useEnhancedEffect as useEnhancedEffect,
+} from '@mui/material/utils';
 import { isDeepEqual } from '@mui/x-internals/isDeepEqual';
 import { useGridEvent, useGridEventPriority } from '../../utils/useGridEvent';
 import type { GridEventListener } from '../../../models/events/gridEventListener';

@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import useForkRef from '@mui/utils/useForkRef';
+import { useForkRef } from '@mui/material/utils';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
 import { shouldForwardProp } from '@mui/system/createStyled';
 import { useChartRootRef } from '../hooks/useChartRootRef';

@@ -1,6 +1,6 @@
-import generateUtilityClasses from '@mui/utils/generateUtilityClasses';
+import generateUtilityClasses from '@mui/material/generateUtilityClasses';
 import composeClasses from '@mui/utils/composeClasses';
-import generateUtilityClass from '@mui/utils/generateUtilityClass';
+import generateUtilityClass from '@mui/material/generateUtilityClass';
 import type { ChartsZoomSliderThumbOwnerState } from './ChartsAxisZoomSliderThumb';
 
 export interface ChartsAxisZoomSliderThumbClasses {

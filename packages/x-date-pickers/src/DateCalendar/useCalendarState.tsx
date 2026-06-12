@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import { SlideDirection } from './PickersSlideTransition';
 import { useIsDateDisabled } from './useIsDateDisabled';
 import { MuiPickersAdapter, PickersTimezone, PickerValidDate } from '../models';

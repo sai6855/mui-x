@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import { GridMenu, useGridSelector } from '@mui/x-data-grid-pro';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import { useGridRootProps } from '../../hooks/utils/useGridRootProps';
 import { useGridApiContext } from '../../hooks/utils/useGridApiContext';
 import {

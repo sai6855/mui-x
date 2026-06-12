@@ -2,7 +2,7 @@
 import * as React from 'react';
 import type { RefObject } from '@mui/x-internals/types';
 import composeClasses from '@mui/utils/composeClasses';
-import ownerDocument from '@mui/utils/ownerDocument';
+import { ownerDocument } from '@mui/material/utils';
 import { useRtl } from '@mui/system/RtlProvider';
 import {
   type CursorCoordinates,

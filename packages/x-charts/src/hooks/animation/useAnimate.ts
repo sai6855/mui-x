@@ -1,5 +1,5 @@
 'use client';
-import useForkRef from '@mui/utils/useForkRef';
+import { useForkRef } from '@mui/material/utils';
 import type * as React from 'react';
 import { useAnimateInternal } from '../../internals/animation/useAnimateInternal';
 

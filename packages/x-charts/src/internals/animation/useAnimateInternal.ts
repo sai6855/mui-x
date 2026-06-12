@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import { ANIMATION_DURATION_MS, ANIMATION_TIMING_FUNCTION_JS } from './animation';
 import { Transition } from './Transition';
 import { shallowEqual } from '../shallowEqual';

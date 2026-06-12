@@ -1,7 +1,7 @@
 'use client';
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import * as React from 'react';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import composeClasses from '@mui/utils/composeClasses';
 import { styled } from '@mui/material/styles';
 import { fastMemo } from '@mui/x-internals/fastMemo';

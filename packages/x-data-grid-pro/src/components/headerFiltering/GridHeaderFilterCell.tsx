@@ -3,9 +3,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { styled } from '@mui/material/styles';
-import useForkRef from '@mui/utils/useForkRef';
+import { useForkRef, capitalize } from '@mui/material/utils';
 import composeClasses from '@mui/utils/composeClasses';
-import capitalize from '@mui/utils/capitalize';
 import { fastMemo } from '@mui/x-internals/fastMemo';
 import {
   type GridFilterItem,

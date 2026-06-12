@@ -1,8 +1,7 @@
 'use client';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import useForkRef from '@mui/utils/useForkRef';
-import useId from '@mui/utils/useId';
+import { useForkRef, unstable_useId as useId } from '@mui/material/utils';
 import { forwardRef } from '@mui/x-internals/forwardRef';
 import { useComponentRenderer, type RenderProp } from '@mui/x-internals/useComponentRenderer';
 import { useGridRootProps } from '../../hooks/utils/useGridRootProps';

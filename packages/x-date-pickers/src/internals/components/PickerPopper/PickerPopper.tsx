@@ -12,9 +12,7 @@ import MuiPopper, {
 import BaseFocusTrap, {
   TrapFocusProps as MuiTrapFocusProps,
 } from '@mui/material/Unstable_TrapFocus';
-import useForkRef from '@mui/utils/useForkRef';
-import useEventCallback from '@mui/utils/useEventCallback';
-import ownerDocument from '@mui/utils/ownerDocument';
+import { useForkRef, useEventCallback, ownerDocument } from '@mui/material/utils';
 import composeClasses from '@mui/utils/composeClasses';
 import { styled, useThemeProps } from '@mui/material/styles';
 import { TransitionProps as MuiTransitionProps } from '@mui/material/transitions';

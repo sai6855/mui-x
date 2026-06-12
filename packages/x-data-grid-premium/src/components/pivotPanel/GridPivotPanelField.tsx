@@ -12,7 +12,7 @@ import {
 } from '@mui/x-data-grid-pro';
 import composeClasses from '@mui/utils/composeClasses';
 import { GridColumnSortButton, NotRendered, vars } from '@mui/x-data-grid-pro/internals';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import type { DataGridPremiumProcessedProps } from '../../models/dataGridPremiumProps';
 import type {
   GridPivotModel,

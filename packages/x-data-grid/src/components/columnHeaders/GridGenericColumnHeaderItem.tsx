@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import clsx from 'clsx';
-import useForkRef from '@mui/utils/useForkRef';
+import { useForkRef } from '@mui/material/utils';
 import { forwardRef } from '@mui/x-internals/forwardRef';
 import type { GridStateColDef } from '../../models/colDef/gridColDef';
 import type { GridSortDirection } from '../../models/gridSortModel';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { RefObject } from '@mui/x-internals/types';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import type { GridEventListener } from '../../../models/events';
 import type { DataGridProcessedProps } from '../../../models/props/DataGridProps';
 import type { GridPrivateApiCommunity } from '../../../models/api/gridApiCommunity';

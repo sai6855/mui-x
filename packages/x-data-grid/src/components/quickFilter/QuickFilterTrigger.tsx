@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { forwardRef } from '@mui/x-internals/forwardRef';
 import { useComponentRenderer, type RenderProp } from '@mui/x-internals/useComponentRenderer';
-import useForkRef from '@mui/utils/useForkRef';
+import { useForkRef } from '@mui/material/utils';
 import { useGridRootProps } from '../../hooks/utils/useGridRootProps';
 import type { GridSlotProps } from '../../models';
 import { type QuickFilterState, useQuickFilterContext } from './QuickFilterContext';

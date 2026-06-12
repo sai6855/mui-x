@@ -1,9 +1,7 @@
 'use client';
 import * as React from 'react';
-import debounce from '@mui/utils/debounce';
+import { debounce, useEventCallback, ownerDocument } from '@mui/material/utils';
 import type { RefObject } from '@mui/x-internals/types';
-import useEventCallback from '@mui/utils/useEventCallback';
-import ownerDocument from '@mui/utils/ownerDocument';
 import { gridClasses } from '../../../constants/gridClasses';
 import type { GridEventListener, GridEventLookup } from '../../../models/events';
 import type { GridPrivateApiCommunity } from '../../../models/api/gridApiCommunity';

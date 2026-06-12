@@ -2,7 +2,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import type { GridChartsConfigurationOptions } from '@mui/x-internals/types';
 import { useGridSelector, vars } from '@mui/x-data-grid-pro/internals';
 import { GridMenu, GridOverlay } from '@mui/x-data-grid-pro';

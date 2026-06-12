@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { lruMemoize } from '@mui/x-internals/lruMemoize';
 import type { RefObject } from '@mui/x-internals/types';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import { isDeepEqual } from '@mui/x-internals/isDeepEqual';
 import type { GridEventListener } from '../../../models/events';
 import type { DataGridProcessedProps } from '../../../models/props/DataGridProps';

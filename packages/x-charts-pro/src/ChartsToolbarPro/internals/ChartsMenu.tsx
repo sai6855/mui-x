@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import HTMLElementType from '@mui/utils/HTMLElementType';
 import { useChartsSlots } from '@mui/x-charts/internals';
 import { type ChartsSlotsPro } from '../../internals/material';

@@ -1,7 +1,9 @@
 'use client';
 import * as React from 'react';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
-import useEventCallback from '@mui/utils/useEventCallback';
+import {
+  unstable_useEnhancedEffect as useEnhancedEffect,
+  useEventCallback,
+} from '@mui/material/utils';
 import { type PointerGestureEventData } from '@mui/x-internal-gestures/core';
 import { type ChartPlugin } from '../../models';
 import { type SeriesId } from '../../../../models/seriesType/common';

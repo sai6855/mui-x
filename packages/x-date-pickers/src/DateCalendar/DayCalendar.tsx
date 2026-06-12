@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import Typography from '@mui/material/Typography';
 import useSlotProps from '@mui/utils/useSlotProps';
 import { useRtl } from '@mui/system/RtlProvider';

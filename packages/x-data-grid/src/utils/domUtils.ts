@@ -38,20 +38,7 @@ export function getGridCellElement(root: Element, { id, field }: { id: GridRowId
   return root.querySelector<HTMLDivElement>(selector);
 }
 
-// https://www.abeautifulsite.net/posts/finding-the-active-element-in-a-shadow-root/
-export const getActiveElement = (root: Document | ShadowRoot = document): Element | null => {
-  const activeEl = root.activeElement;
-
-  if (!activeEl) {
-    return null;
-  }
-
-  if (activeEl.shadowRoot) {
-    return getActiveElement(activeEl.shadowRoot);
-  }
-
-  return activeEl;
-};
+export { getActiveElement } from '@mui/material/utils';
 
 export function isEventTargetInPortal(event: React.SyntheticEvent) {
   if (

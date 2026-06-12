@@ -1,5 +1,5 @@
 'use client';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 
 function getDevicePixelContentBoxSize(entry: ResizeObserverEntry) {
   // Safari does not support devicePixelContentBoxSize

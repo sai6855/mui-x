@@ -28,7 +28,7 @@ import {
 } from '@mui/x-data-grid/internals';
 import { warnOnce } from '@mui/x-internals/warning';
 import { GRID_DETAIL_PANEL_TOGGLE_FIELD, GRID_REORDER_COL_DEF } from '@mui/x-data-grid-pro';
-import debounce from '@mui/utils/debounce';
+import { debounce } from '@mui/material/utils';
 import type { GridApiPremium, GridPrivateApiPremium } from '../../../models/gridApiPremium';
 import type { DataGridPremiumProcessedProps } from '../../../models/dataGridPremiumProps';
 

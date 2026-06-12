@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import { useDateManager, useDateTimeManager, useTimeManager } from '@mui/x-date-pickers/managers';
 import { UseValidationReturnValue } from '@mui/x-date-pickers/validation';
 import { PickerValueType } from '@mui/x-date-pickers/models';

@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material/utils';
 import type { GridSlotProps } from '../../models/gridSlotsComponentsProps';
 import { GridCellEditStopReasons } from '../../models/params/gridEditCellParams';
 import type { GridRenderEditCellParams } from '../../models/params/gridCellParams';

@@ -3,8 +3,7 @@ import * as React from 'react';
 import type { RefObject } from '@mui/x-internals/types';
 import { throttle } from '@mui/x-internals/throttle';
 import { isDeepEqual } from '@mui/x-internals/isDeepEqual';
-import useEventCallback from '@mui/utils/useEventCallback';
-import debounce from '@mui/utils/debounce';
+import { useEventCallback, debounce } from '@mui/material/utils';
 import {
   useGridEvent,
   gridSortModelSelector,

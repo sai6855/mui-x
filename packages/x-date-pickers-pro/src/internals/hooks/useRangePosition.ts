@@ -1,5 +1,4 @@
-import useControlled from '@mui/utils/useControlled';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useControlled, useEventCallback } from '@mui/material/utils';
 import { RangePosition } from '../../models';
 
 export interface UseRangePositionProps {

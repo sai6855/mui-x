@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import debounce from '@mui/utils/debounce';
+import { debounce } from '@mui/material/utils';
 import type { RefObject } from '@mui/x-internals/types';
 import {
   type GridColDef,

@@ -1,4 +1,4 @@
-import ownerDocument from '@mui/utils/ownerDocument';
+import { ownerDocument } from '@mui/material/utils';
 import { loadStyleSheets } from '@mui/x-internals/export';
 import { warnOnce } from '@mui/x-internals/warning';
 import { applyStyles, copyCanvasesContent, createExportIframe } from './common';

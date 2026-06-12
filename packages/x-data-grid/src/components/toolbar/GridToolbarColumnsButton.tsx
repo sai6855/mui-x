@@ -1,9 +1,8 @@
 'use client';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId, useForkRef } from '@mui/material/utils';
 import { forwardRef } from '@mui/x-internals/forwardRef';
-import useForkRef from '@mui/utils/useForkRef';
 import type { GridSlotProps } from '../../models/gridSlotsComponentsProps';
 import { useGridSelector } from '../../hooks/utils/useGridSelector';
 import { gridPreferencePanelStateSelector } from '../../hooks/features/preferencesPanel/gridPreferencePanelSelector';

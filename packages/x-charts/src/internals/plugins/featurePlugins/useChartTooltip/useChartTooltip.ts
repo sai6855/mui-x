@@ -1,6 +1,8 @@
 import { useAssertModelConsistency } from '@mui/x-internals/useAssertModelConsistency';
-import useEventCallback from '@mui/utils/useEventCallback';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import {
+  useEventCallback,
+  unstable_useEnhancedEffect as useEnhancedEffect,
+} from '@mui/material/utils';
 import { fastObjectShallowCompare } from '@mui/x-internals/fastObjectShallowCompare';
 import type { ChartPlugin, ChartPluginOptions } from '../../models';
 import type { UseChartTooltipSignature } from './useChartTooltip.types';

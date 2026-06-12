@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import { UseFieldStateReturnValue } from './useFieldState';
 import { FieldSection, MuiPickersAdapter } from '../../../models';
 import { UseFieldDOMGetters, UseFieldInternalProps } from './useField.types';

@@ -1,8 +1,7 @@
 'use client';
 import * as React from 'react';
-import useControlled from '@mui/utils/useControlled';
+import { useControlled, useEventCallback } from '@mui/material/utils';
 import useTimeout from '@mui/utils/useTimeout';
-import useEventCallback from '@mui/utils/useEventCallback';
 import { useRtl } from '@mui/system/RtlProvider';
 import { usePickerAdapter, usePickerTranslations } from '../../../hooks';
 import {

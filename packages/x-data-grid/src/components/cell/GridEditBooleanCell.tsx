@@ -3,8 +3,10 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
-import useId from '@mui/utils/useId';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
+import {
+  unstable_useId as useId,
+  unstable_useEnhancedEffect as useEnhancedEffect,
+} from '@mui/material/utils';
 import { getDataGridUtilityClass } from '../../constants/gridClasses';
 import type { GridRenderEditCellParams } from '../../models/params/gridCellParams';
 import { useGridRootProps } from '../../hooks/utils/useGridRootProps';

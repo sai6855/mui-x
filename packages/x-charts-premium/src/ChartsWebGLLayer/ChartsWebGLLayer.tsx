@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import useForkRef from '@mui/utils/useForkRef';
+import { useForkRef } from '@mui/material/utils';
 import { selectorChartSvgHeight, selectorChartSvgWidth, useStore } from '@mui/x-charts/internals';
 import { useDrawingArea, useChartRootRef } from '@mui/x-charts/hooks';
 import { useWebGLResizeObserver } from '../utils/webgl/useWebGLResizeObserver';

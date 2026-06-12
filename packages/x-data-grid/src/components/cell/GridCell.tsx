@@ -2,16 +2,18 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx, { type ClassValue } from 'clsx';
-import useForkRef from '@mui/utils/useForkRef';
+import {
+  useForkRef,
+  ownerDocument,
+  capitalize,
+  unstable_useEnhancedEffect as useEnhancedEffect,
+} from '@mui/material/utils';
 import composeClasses from '@mui/utils/composeClasses';
-import ownerDocument from '@mui/utils/ownerDocument';
-import capitalize from '@mui/utils/capitalize';
 import { fastMemo } from '@mui/x-internals/fastMemo';
 import { useRtl } from '@mui/system/RtlProvider';
 import { forwardRef } from '@mui/x-internals/forwardRef';
 import { useStore } from '@mui/x-internals/store';
 import { Rowspan } from '@mui/x-virtualizer';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
 import { doesSupportPreventScroll } from '../../utils/doesSupportPreventScroll';
 import { getDataGridUtilityClass, gridClasses } from '../../constants/gridClasses';
 import {

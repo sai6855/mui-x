@@ -1,5 +1,5 @@
 'use client';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import { useEffectAfterFirstRender } from '@mui/x-internals/useEffectAfterFirstRender';
 import { type ChartPlugin } from '../../models';
 import {

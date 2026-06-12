@@ -1,7 +1,6 @@
 'use client';
 import * as React from 'react';
-import useEventCallback from '@mui/utils/useEventCallback';
-import useControlled from '@mui/utils/useControlled';
+import { useEventCallback, useControlled } from '@mui/material/utils';
 import { MakeOptional } from '@mui/x-internals/types';
 import type { PickerSelectionState } from './usePicker';
 import { DateOrTimeViewWithMeridiem, PickerValidValue } from '../models';

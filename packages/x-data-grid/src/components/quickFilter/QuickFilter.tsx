@@ -1,9 +1,11 @@
 'use client';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import debounce from '@mui/utils/debounce';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
-import useId from '@mui/utils/useId';
+import {
+  debounce,
+  unstable_useEnhancedEffect as useEnhancedEffect,
+  unstable_useId as useId,
+} from '@mui/material/utils';
 import { isDeepEqual } from '@mui/x-internals/isDeepEqual';
 import { useComponentRenderer, type RenderProp } from '@mui/x-internals/useComponentRenderer';
 import { QuickFilterContext, type QuickFilterState } from './QuickFilterContext';

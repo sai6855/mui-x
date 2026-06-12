@@ -4,12 +4,14 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import useSlotProps from '@mui/utils/useSlotProps';
 import { styled, useThemeProps } from '@mui/material/styles';
-import useEventCallback from '@mui/utils/useEventCallback';
+import {
+  useEventCallback,
+  useForkRef,
+  unstable_useEnhancedEffect as useEnhancedEffect,
+} from '@mui/material/utils';
 import composeClasses from '@mui/utils/composeClasses';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
-import useForkRef from '@mui/utils/useForkRef';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
 import { usePickerAdapter, usePickerTranslations } from '../hooks';
 import { useNow } from '../internals/hooks/useUtils';
 import { createIsAfterIgnoreDatePart } from '../internals/utils/time-utils';

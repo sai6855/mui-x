@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import { useTimeout } from '../../../hooks/utils/useTimeout';
 import type { TextFieldProps } from '../../../models/gridBaseSlots';
 import type { GridFilterItem } from '../../../models/gridFilterItem';

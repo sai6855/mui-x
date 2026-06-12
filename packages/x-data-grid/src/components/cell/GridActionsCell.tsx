@@ -2,7 +2,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useRtl } from '@mui/system/RtlProvider';
-import useId from '@mui/utils/useId';
+import { unstable_useId as useId } from '@mui/material/utils';
 import { warnOnce } from '@mui/x-internals/warning';
 import type { GridRowParams } from '../../models/params/gridRowParams';
 import type { GridRenderCellParams } from '../../models/params/gridCellParams';

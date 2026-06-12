@@ -3,7 +3,7 @@ import * as React from 'react';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import useEventCallback from '@mui/utils/useEventCallback';
+import { useEventCallback } from '@mui/material/utils';
 import { useLegend } from '../hooks/useLegend';
 import type { Direction } from './direction';
 import { type SeriesLegendItemContext, type SeriesLegendItemParams } from './legendContext.types';
