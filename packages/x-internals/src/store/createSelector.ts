@@ -63,50 +63,20 @@ export const createSelector = ((
   }
 
   let selector: any;
-  if (a && b && c && d && e && f && g && h) {
+  if (a && b && c && d) {
+    // 4 or more input selectors: take a generic, slightly slower path.
+    // The explicit paths below cover the common arities without allocations.
+    const fns = [a, b, c, d, e, f, g, h].filter(Boolean) as Function[];
+    const combiner = fns.pop()!;
     selector = (state: any, a1: any, a2: any, a3: any) => {
-      const va = a(state, a1, a2, a3);
-      const vb = b(state, a1, a2, a3);
-      const vc = c(state, a1, a2, a3);
-      const vd = d(state, a1, a2, a3);
-      const ve = e(state, a1, a2, a3);
-      const vf = f(state, a1, a2, a3);
-      const vg = g(state, a1, a2, a3);
-      return h(va, vb, vc, vd, ve, vf, vg, a1, a2, a3);
-    };
-  } else if (a && b && c && d && e && f && g) {
-    selector = (state: any, a1: any, a2: any, a3: any) => {
-      const va = a(state, a1, a2, a3);
-      const vb = b(state, a1, a2, a3);
-      const vc = c(state, a1, a2, a3);
-      const vd = d(state, a1, a2, a3);
-      const ve = e(state, a1, a2, a3);
-      const vf = f(state, a1, a2, a3);
-      return g(va, vb, vc, vd, ve, vf, a1, a2, a3);
-    };
-  } else if (a && b && c && d && e && f) {
-    selector = (state: any, a1: any, a2: any, a3: any) => {
-      const va = a(state, a1, a2, a3);
-      const vb = b(state, a1, a2, a3);
-      const vc = c(state, a1, a2, a3);
-      const vd = d(state, a1, a2, a3);
-      const ve = e(state, a1, a2, a3);
-      return f(va, vb, vc, vd, ve, a1, a2, a3);
-    };
-  } else if (a && b && c && d && e) {
-    selector = (state: any, a1: any, a2: any, a3: any) => {
-      const va = a(state, a1, a2, a3);
-      const vb = b(state, a1, a2, a3);
-      const vc = c(state, a1, a2, a3);
-      const vd = d(state, a1, a2, a3);
-      return e(va, vb, vc, vd, a1, a2, a3);
-    };
-  } else if (a && b && c && d) {
-    selector = (state: any, a1: any, a2: any, a3: any) => {
-      const va = a(state, a1, a2, a3);
-      const vb = b(state, a1, a2, a3);
-      const vc = c(state, a1, a2, a3);
-      return d(va, vb, vc, a1, a2, a3);
+      const values = new Array(fns.length + 3);
+      for (let i = 0; i < fns.length; i += 1) {
+        values[i] = fns[i](state, a1, a2, a3);
+      }
+      values[fns.length] = a1;
+      values[fns.length + 1] = a2;
+      values[fns.length + 2] = a3;
+      return combiner(...values);
     };
   } else if (a && b && c) {
     selector = (state: any, a1: any, a2: any, a3: any) => {
