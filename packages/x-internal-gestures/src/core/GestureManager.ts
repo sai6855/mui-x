@@ -184,6 +184,17 @@ export class GestureManager<
   }
 
   /**
+   * Register an additional gesture template that may not be part of the initial type parameters.
+   * Used internally by plugins to extend gesture support at runtime.
+   *
+   * @internal
+   * @param gesture - The gesture instance to use as a template
+   */
+  public registerGestureTemplate(gesture: Gesture<string>): void {
+    this.addGestureTemplate(gesture as Gesture<GestureName>);
+  }
+
+  /**
    * Updates the options for a specific gesture on a given element and emits a change event.
    *
    * @param gestureName - Name of the gesture whose options should be updated

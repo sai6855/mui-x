@@ -4,12 +4,9 @@ import {
   GestureManager,
   MoveGesture,
   PanGesture,
-  PinchGesture,
-  PressAndDragGesture,
   PressGesture,
-  TapAndDragGesture,
   TapGesture,
-  TurnWheelGesture,
+  type Gesture,
 } from '@mui/x-internal-gestures/core';
 import { type ChartPlugin } from '../../models';
 import {
@@ -24,15 +21,8 @@ type GestureManagerTyped = GestureManager<
   string,
   | PanGesture<'pan'>
   | MoveGesture<'move'>
-  | PanGesture<'zoomPan'>
-  | PinchGesture<'zoomPinch'>
-  | TurnWheelGesture<'zoomTurnWheel'>
-  | TurnWheelGesture<'panTurnWheel'>
   | TapGesture<'tap'>
   | PressGesture<'quickPress'>
-  | TapAndDragGesture<'zoomTapAndDrag'>
-  | PressAndDragGesture<'zoomPressAndDrag'>
-  | TapGesture<'zoomDoubleTapReset'>
   | PanGesture<'brush'>
 >;
 
@@ -48,8 +38,6 @@ export const useChartInteractionListener: ChartPlugin<UseChartInteractionListene
     if (!gestureManagerRef.current) {
       gestureManagerRef.current = new GestureManager({
         gestures: [
-          // We separate the zoom gestures from the gestures that are not zoom related
-          // This allows us to configure the zoom gestures based on the zoom configuration.
           new PanGesture({
             name: 'pan',
             threshold: 0,
@@ -72,40 +60,6 @@ export const useChartInteractionListener: ChartPlugin<UseChartInteractionListene
             threshold: 0,
             maxPointers: 1,
           }),
-          // Zoom gestures
-          new PanGesture({
-            name: 'zoomPan',
-            threshold: 0,
-            preventIf: ['zoomTapAndDrag', 'zoomPressAndDrag'],
-          }),
-          new PinchGesture({
-            name: 'zoomPinch',
-            threshold: 5,
-          }),
-          new TurnWheelGesture({
-            name: 'zoomTurnWheel',
-            sensitivity: 0.01,
-            initialDelta: 1,
-            passive: false,
-          }),
-          new TurnWheelGesture({
-            name: 'panTurnWheel',
-            sensitivity: 0.5,
-            passive: false,
-          }),
-          new TapAndDragGesture({
-            name: 'zoomTapAndDrag',
-            dragThreshold: 10,
-          }),
-          new PressAndDragGesture({
-            name: 'zoomPressAndDrag',
-            dragThreshold: 10,
-            preventIf: ['zoomPinch'],
-          }),
-          new TapGesture({
-            name: 'zoomDoubleTapReset',
-            taps: 2,
-          }),
         ],
       });
     }
@@ -117,23 +71,7 @@ export const useChartInteractionListener: ChartPlugin<UseChartInteractionListene
       return undefined;
     }
 
-    gestureManager.registerElement(
-      [
-        'pan',
-        'move',
-        'zoomPinch',
-        'zoomPan',
-        'zoomTurnWheel',
-        'panTurnWheel',
-        'tap',
-        'quickPress',
-        'zoomTapAndDrag',
-        'zoomPressAndDrag',
-        'zoomDoubleTapReset',
-        'brush',
-      ],
-      svg,
-    );
+    gestureManager.registerElement(['pan', 'move', 'tap', 'quickPress', 'brush'], svg);
 
     return () => {
       // Cleanup gesture manager
@@ -163,9 +101,22 @@ export const useChartInteractionListener: ChartPlugin<UseChartInteractionListene
         return;
       }
 
-      gestureManager.setGestureOptions(interaction, svg, options ?? {});
+      (gestureManager as any).setGestureOptions(interaction, svg, options ?? {});
     },
     [chartsLayerContainerRef, gestureManagerRef],
+  );
+
+  const registerZoomGestures = React.useCallback(
+    (gestures: Gesture<string>[], gestureNames: string[]) => {
+      const gestureManager = gestureManagerRef.current;
+      const svg = chartsLayerContainerRef.current;
+      if (!gestureManager || !svg) {
+        return;
+      }
+      gestures.forEach((gesture) => gestureManager.registerGestureTemplate(gesture));
+      (gestureManager as any).registerElement(gestureNames, svg);
+    },
+    [],
   );
 
   React.useEffect(() => {
@@ -188,6 +139,7 @@ export const useChartInteractionListener: ChartPlugin<UseChartInteractionListene
     instance: {
       addInteractionListener,
       updateZoomInteractionListeners,
+      registerZoomGestures,
     },
   };
 };

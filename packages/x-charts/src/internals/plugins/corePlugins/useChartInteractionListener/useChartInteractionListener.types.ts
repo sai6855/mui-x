@@ -13,6 +13,7 @@ import {
   type TapAndDragGestureOptions,
   type TapGestureOptions,
   type TurnWheelGestureOptions,
+  type Gesture,
 } from '@mui/x-internal-gestures/core';
 import { type ChartPluginSignature } from '../../models';
 
@@ -151,6 +152,15 @@ export interface UseChartInteractionListenerInstance {
    * @param options The options to apply to the interaction.
    */
   updateZoomInteractionListeners: UpdateZoomInteractionListeners;
+  /**
+   * Registers additional gesture templates and activates them on the SVG element.
+   * Used internally by pro plugins to extend gesture support at runtime.
+   *
+   * @internal
+   * @param gestures - Array of gesture instances to register as templates.
+   * @param gestureNames - Array of gesture names to activate on the SVG element.
+   */
+  registerZoomGestures: (gestures: Gesture<string>[], gestureNames: string[]) => void;
 }
 
 export type UseChartInteractionListenerSignature = ChartPluginSignature<{

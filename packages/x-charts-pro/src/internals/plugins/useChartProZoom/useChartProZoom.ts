@@ -16,6 +16,14 @@ import { useEffectAfterFirstRender } from '@mui/x-internals/useEffectAfterFirstR
 import { useEventCallback } from '@mui/material/utils';
 import { isDeepEqual } from '@mui/x-internals/isDeepEqual';
 import {
+  PanGesture,
+  PinchGesture,
+  PressAndDragGesture,
+  TapAndDragGesture,
+  TapGesture,
+  TurnWheelGesture,
+} from '@mui/x-internal-gestures/core';
+import {
   getRangeButtonDomainParams,
   rangeButtonValueToZoom,
 } from '../../../ChartsToolbarPro/rangeButtonValueToZoom';
@@ -44,12 +52,30 @@ function isInitialZoomRange(entry: InitialZoom): entry is InitialZoomRange {
 }
 
 export const useChartProZoom: ChartPlugin<UseChartProZoomSignature> = (pluginData) => {
-  const { store, params } = pluginData;
+  const { store, params, instance } = pluginData;
   const {
     zoomData: paramsZoomData,
     onZoomChange: onZoomChangeProp,
     zoomInteractionConfig,
   } = params;
+
+  // Register zoom-only gestures that are not included in the community bundle.
+  // This runs after the core interaction plugin creates the GestureManager.
+  React.useEffect(() => {
+    instance.registerZoomGestures(
+      [
+        new PanGesture({ name: 'zoomPan', threshold: 0, preventIf: ['zoomTapAndDrag', 'zoomPressAndDrag'] }),
+        new PinchGesture({ name: 'zoomPinch', threshold: 5 }),
+        new TurnWheelGesture({ name: 'zoomTurnWheel', sensitivity: 0.01, initialDelta: 1, passive: false }),
+        new TurnWheelGesture({ name: 'panTurnWheel', sensitivity: 0.5, passive: false }),
+        new TapAndDragGesture({ name: 'zoomTapAndDrag', dragThreshold: 10 }),
+        new PressAndDragGesture({ name: 'zoomPressAndDrag', dragThreshold: 10, preventIf: ['zoomPinch'] }),
+        new TapGesture({ name: 'zoomDoubleTapReset', taps: 2 }),
+      ],
+      ['zoomPan', 'zoomPinch', 'zoomTurnWheel', 'panTurnWheel', 'zoomTapAndDrag', 'zoomPressAndDrag', 'zoomDoubleTapReset'],
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [instance]);
 
   const onZoomChange = useEventCallback(onZoomChangeProp ?? (() => {}));
   const optionsLookup = store.use(selectorChartZoomOptionsLookup);
