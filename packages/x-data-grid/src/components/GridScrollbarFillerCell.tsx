@@ -4,11 +4,6 @@ import { useGridPrivateApiContext } from '../hooks/utils/useGridPrivateApiContex
 import { usePinnedScrollOffset } from '../hooks/utils/usePinnedScrollOffset';
 import { PinnedColumnPosition } from '../internals/constants';
 
-const classes = {
-  root: gridClasses.scrollbarFiller,
-  pinnedRight: gridClasses['scrollbarFiller--pinnedRight'],
-};
-
 function GridScrollbarFillerCell({ pinnedRight }: { pinnedRight?: boolean }) {
   const apiRef = useGridPrivateApiContext();
   const pinnedScrollOffset = usePinnedScrollOffset(
@@ -19,7 +14,10 @@ function GridScrollbarFillerCell({ pinnedRight }: { pinnedRight?: boolean }) {
   return (
     <div
       role="none"
-      className={clsx(classes.root, pinnedRight && classes.pinnedRight)}
+      className={clsx(
+        gridClasses.scrollbarFiller,
+        pinnedRight && gridClasses['scrollbarFiller--pinnedRight'],
+      )}
       style={{ right: pinnedScrollOffset }}
     />
   );
