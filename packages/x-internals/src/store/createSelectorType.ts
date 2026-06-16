@@ -1,4 +1,5 @@
-import type { Selector } from 'reselect';
+/** A selector reads a value out of the store's state. */
+export type Selector<State, Result = unknown> = (state: State, ...args: any[]) => Result;
 
 /**
  * The NoOptionalParams type is a utility type that checks if a function has optional or default parameters.

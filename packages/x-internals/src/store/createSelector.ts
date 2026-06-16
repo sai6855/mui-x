@@ -1,22 +1,52 @@
-import {
-  lruMemoize,
-  createSelectorCreator,
-  OverrideMemoizeOptions,
-  UnknownMemoizer,
-} from 'reselect';
+import { lruMemoize } from '../lruMemoize';
 import type { CreateSelectorFunction } from './createSelectorType';
 
-export type { CreateSelectorFunction } from './createSelectorType';
+export type { CreateSelectorFunction, Selector } from './createSelectorType';
 
 /* eslint-disable no-underscore-dangle */ // __cacheKey__
 
-const reselectCreateSelector = createSelectorCreator({
-  memoize: lruMemoize,
-  memoizeOptions: {
+type MemoizeOptions = {
+  memoizeOptions?: {
+    equalityCheck?: (a: any, b: any) => boolean;
+    maxSize?: number;
+    resultEqualityCheck?: (a: any, b: any) => boolean;
+  };
+};
+
+/**
+ * Creates a memoized selector out of a list of input selectors and a combiner.
+ *
+ * This is a minimal, focused replacement for `reselect`'s `createSelectorCreator`
+ * configured with `lruMemoize` (cache size 1). Keeping it local lets us drop the
+ * `reselect` dependency from the bundle.
+ *
+ * - the input selectors are run on every call (they are cheap state accessors);
+ * - the combiner output is memoized with cache size 1, so "only the most recent
+ *   selector result is cached" (`Object.is` comparison on the inputs, plus an
+ *   optional `resultEqualityCheck` to preserve the previous reference).
+ */
+function reselectCreateSelector(...args: any[]) {
+  let options: MemoizeOptions | undefined;
+  if (typeof args[args.length - 1] === 'object') {
+    options = args.pop();
+  }
+  const combiner = args.pop() as Function;
+  const inputSelectors = args as Function[];
+
+  const memoizedCombiner = lruMemoize(combiner as (...a: any[]) => any, {
     maxSize: 1,
     equalityCheck: Object.is,
-  },
-});
+    resultEqualityCheck: options?.memoizeOptions?.resultEqualityCheck,
+  });
+
+  return (state: any, a1?: any, a2?: any, a3?: any) => {
+    const inputs = new Array(inputSelectors.length);
+    for (let i = 0; i < inputSelectors.length; i += 1) {
+      inputs[i] = inputSelectors[i](state, a1, a2, a3);
+    }
+    return memoizedCombiner.apply(null, inputs);
+  };
+}
 
 type SelectorWithArgs = ReturnType<typeof reselectCreateSelector> & { selectorArgs: any[3] };
 
@@ -134,7 +164,7 @@ export const createSelector = ((
 /* eslint-enable id-denylist */
 
 export const createSelectorMemoizedWithOptions =
-  (options?: OverrideMemoizeOptions<UnknownMemoizer>): CreateSelectorFunction =>
+  (options?: MemoizeOptions): CreateSelectorFunction =>
   (...inputs: any[]) => {
     type CacheKey = { id: number };
 

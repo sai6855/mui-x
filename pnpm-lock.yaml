@@ -204,9 +204,6 @@ catalogs:
     react-transition-group:
       specifier: ^4.4.5
       version: 4.4.5
-    reselect:
-      specifier: ^5.2.0
-      version: 5.2.0
     rimraf:
       specifier: ^6.1.3
       version: 6.1.3
@@ -793,9 +790,6 @@ importers:
       prop-types:
         specifier: 'catalog:'
         version: 15.8.1
-      reselect:
-        specifier: 'catalog:'
-        version: 5.2.0
       use-sync-external-store:
         specifier: 'catalog:'
         version: 1.6.0(react@19.2.6)
@@ -1605,9 +1599,6 @@ importers:
       core-js-pure:
         specifier: 'catalog:'
         version: 3.49.0
-      reselect:
-        specifier: 'catalog:'
-        version: 5.2.0
       use-sync-external-store:
         specifier: 'catalog:'
         version: 1.6.0(react@19.2.6)
@@ -2032,9 +2023,6 @@ importers:
       react-transition-group:
         specifier: 'catalog:'
         version: 4.4.5(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      reselect:
-        specifier: 'catalog:'
-        version: 5.2.0
       use-sync-external-store:
         specifier: 'catalog:'
         version: 1.6.0(react@19.2.6)
