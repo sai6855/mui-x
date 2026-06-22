@@ -96,6 +96,44 @@ export default withDeploymentConfig({
   webpack: (config, options) => {
     const plugins = config.plugins.slice();
 
+    // Workaround for a Next.js dev bug: its React Refresh loader appends an
+    // `import.meta.webpackHot` footer to every module it processes, picking the
+    // CommonJS-safe variant only for files literally named `*.cjs`. Plenty of our
+    // dependencies ship CommonJS code in `*.js` files (with `"type": "commonjs"`):
+    // MUI v9 (`@mui/material`/`@mui/icons-material`, which Next always forces into
+    // `optimizePackageImports` so they cannot be excluded via config) and our own
+    // built workspace packages under `packages/*/build`. The injected `import.meta`
+    // then fails to parse in those CommonJS modules: "Cannot use 'import.meta'
+    // outside a module". React Refresh is meaningless on built library code, so
+    // excluding it from the loader rule restores normal handling without losing
+    // anything (these files are not editable source the dev server hot-reloads).
+    if (options.dev && !options.isServer) {
+      const cjsLibraries =
+        /[\\/]node_modules[\\/]@mui[\\/](material|icons-material)[\\/]|[\\/]packages[\\/][^\\/]+[\\/]build[\\/]/;
+      const excludeFromReactRefresh = (rules: any[]) => {
+        for (const rule of rules) {
+          if (!rule || typeof rule !== 'object') {
+            continue;
+          }
+          if (Array.isArray(rule.oneOf)) {
+            excludeFromReactRefresh(rule.oneOf);
+          }
+          if (Array.isArray(rule.rules)) {
+            excludeFromReactRefresh(rule.rules);
+          }
+          const uses = Array.isArray(rule.use) ? rule.use : [rule.use];
+          const usesReactRefresh = uses.some((use: any) => {
+            const loader = typeof use === 'string' ? use : use && use.loader;
+            return typeof loader === 'string' && loader.includes('react-refresh-utils');
+          });
+          if (usesReactRefresh) {
+            rule.exclude = rule.exclude ? { or: [rule.exclude, cjsLibraries] } : cjsLibraries;
+          }
+        }
+      };
+      excludeFromReactRefresh(config.module.rules);
+    }
+
     if (process.env.DOCS_STATS_ENABLED) {
       plugins.push(
         // For all options see https://github.com/th0r/webpack-bundle-analyzer#as-plugin

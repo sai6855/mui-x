@@ -27,7 +27,9 @@ module.exports = function getBabelConfig(api) {
   const useESModules = api.env(['stable', 'rollup']);
 
   return {
-    only: [/node_modules\/(d3-.*|internmap|flatqueue)\/.*\.js/],
+    // Use a separator-agnostic pattern so the filter also matches on Windows,
+    // where Babel tests filenames containing backslashes.
+    only: [/node_modules[\\/](d3-.*|internmap|flatqueue)[\\/].*\.js/],
     plugins: [
       [
         '@babel/plugin-transform-modules-commonjs',
@@ -61,12 +63,14 @@ module.exports = function getBabelConfig(api) {
               // and have an import transform like:
               // - `d3-color` (d3 color is imported by d3-interpolate)
               // - `../../d3-color/src/index.js`
-              // Extract just the package-relative path from the full file path
-              const nodeModulesIndex = currentFile.indexOf('node_modules/');
+              // Extract just the package-relative path from the full file path.
+              // Normalize to forward slashes first so this also works on Windows.
+              const normalizedFile = currentFile.replace(/\\/g, '/');
+              const nodeModulesIndex = normalizedFile.indexOf('node_modules/');
               const relativePath =
                 nodeModulesIndex !== -1
-                  ? currentFile.slice(nodeModulesIndex + 'node_modules/'.length)
-                  : currentFile;
+                  ? normalizedFile.slice(nodeModulesIndex + 'node_modules/'.length)
+                  : normalizedFile;
               const relPathToPkg = path
                 .relative(path.dirname(relativePath), vendorPkg)
                 .replace(/\\/g, '/');
