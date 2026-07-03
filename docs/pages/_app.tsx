@@ -255,6 +255,11 @@ const CSB_CONFIG = {
 
 const DOCS_CONFIG: DocsConfig = {
   ...DEFAULT_DOCS_CONFIG,
+  // Absolute origin used to build canonical and social-preview URLs (og:url,
+  // og:image, twitter:image). Without it the docs infra interpolates
+  // `undefined` into those meta tags, so social platforms (X, etc.) fail to
+  // load the preview image when a docs page is shared.
+  hostUrl: 'https://mui.com',
 };
 
 function useThemeWrapper() {
